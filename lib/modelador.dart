@@ -1,0 +1,1 @@
+export 'modelo/coresPadrao.dart';
