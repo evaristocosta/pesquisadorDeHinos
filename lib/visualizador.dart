@@ -1,0 +1,1 @@
+export 'vista/pesquisador.dart';
