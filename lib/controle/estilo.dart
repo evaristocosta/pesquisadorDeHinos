@@ -23,3 +23,13 @@ final ThemeData estiloPadrao = ThemeData(
     splashColor: CoresPadrao.azul[30],
     buttonColor: CoresPadrao.azul[20],
     buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent));
+
+class RequisitaCor {
+  static Color requisitaCinza(int _cor) {
+    return CoresPadrao.cinza[_cor];
+  } 
+
+  static Color requisitaAzul(int _cor) {
+    return CoresPadrao.azul[_cor];
+  } 
+}
