@@ -49,56 +49,76 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                 itemBuilder: (context, position) {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    child: Row(
+                    child: Flex(
+                      direction: Axis.horizontal,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'titulo',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Raleway',
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'titulo',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: 'Raleway',
+                                ),
                               ),
-                            ),
-                            Text(
-                              'categoria',
-                              style: TextStyle(
-                                color: RequisitaCor.requisitaCinza(30),
-                                fontFamily: 'Raleway',
+                              Text(
+                                'categoria',
+                                style: TextStyle(
+                                  color: RequisitaCor.requisitaCinza(30),
+                                  fontFamily: 'Raleway',
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16.0),
-                              child: Text('parte do hino'),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: Text('parte do hino'),
+                              )
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  'nº',
-                                  style: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: RequisitaCor.requisitaAzul(20)),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    'nº',
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: RequisitaCor.requisitaAzul(20)),
+                                  ),
+                                  Text(
+                                    'XX',
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: RequisitaCor.requisitaAzul(30),
+                                        fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
                                 ),
-                                Text(
-                                  'XX',
-                                  style: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      color: RequisitaCor.requisitaAzul(30),
-                                      fontSize: 20),
-                                ),
-                              ],
-                            ),
-                            Text('coletanea')
-                          ],
+                                child: Container(
+                                    color: RequisitaCor.requisitaAzul(30),
+                                    padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                                    child: Text(
+                                      'Coletanea',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
                         Container(
                           height: 10,
