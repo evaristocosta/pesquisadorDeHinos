@@ -27,9 +27,9 @@ final ThemeData estiloPadrao = ThemeData(
 class RequisitaCor {
   static Color requisitaCinza(int _cor) {
     return CoresPadrao.cinza[_cor];
-  } 
+  }
 
   static Color requisitaAzul(int _cor) {
     return CoresPadrao.azul[_cor];
-  } 
+  }
 }
