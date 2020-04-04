@@ -15,116 +15,89 @@ class PesquisadorApp extends StatefulWidget {
 }
 
 class _PesquisadorAppState extends State<PesquisadorApp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: //Inicial()
-            DurantePesquisa(),
-      ),
-
-      /* 
-        body:  */
-    );
-  }
-}
-
-class Inicial extends StatelessWidget {
-  const Inicial({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Center(
-          child: Container(
-              width: 240,
-              child: Image(
-                image: AssetImage('assets/logo.png'),
-              )),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        Container(
-          width: 320,
-          child: TextField(
-            cursorColor: RequisitaCor.requisitaCinza(40),
-            style: TextStyle(fontSize: 18),
-            decoration: InputDecoration(
-                suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 0.0,
-                    )),
-                contentPadding: EdgeInsets.symmetric(horizontal: 24)),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class DurantePesquisa extends StatefulWidget {
-  @override
-  DurantePesquisaEstado createState() => new DurantePesquisaEstado();
-}
-
-class DurantePesquisaEstado extends State {
+  bool notNull(Object o) => o != null;
   String textoPesquisa = '';
   bool pesquisando = true;
+
+  bool fimAnimacao = false;
 
   void alternaWidget() {
     if (textoPesquisa.isEmpty) {
       setState(() {
         pesquisando = true;
+        fimAnimacao = false;
       });
     } else {
       setState(() {
         pesquisando = false;
+        fimAnimacao = true;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              height: 36,
-              child: Image(
-                image: AssetImage('assets/titulo.png'),
-              )),
+    return Scaffold(
+      body: SafeArea(
+          child: AnimatedContainer(
+        curve: Curves.easeOut,
+        duration: Duration(milliseconds: 400),
+        child: Column(
+          mainAxisAlignment:
+              fimAnimacao ? MainAxisAlignment.start : MainAxisAlignment.center,
+          children: [
+            fimAnimacao
+                ? null : Center(
+                    child: Container(
+                        width: 240,
+                        child: Image(
+                          image: AssetImage('assets/logo.png'),
+                        )),
+                  ),
+
+            Center(
+              child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  height: 36,
+                  child: Image(
+                    image: AssetImage('assets/titulo.png'),
+                  )),
+            ),
+
+            fimAnimacao
+                ?  null : SizedBox(
+                    height: 40,
+                  ),
+
+            Container(
+              width: 320,
+              child: TextField(
+                onChanged: (texto) {
+                  textoPesquisa = texto;
+                  alternaWidget();
+                },
+                cursorColor: RequisitaCor.requisitaCinza(40),
+                style: TextStyle(fontSize: 18),
+                decoration: InputDecoration(
+                    suffixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(
+                          width: 0.0,
+                        )),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+              ),
+            ),
+
+
+            fimAnimacao
+                ? (pesquisando ? PrePesquisa() : ListagemDeHinos())
+                : null,
+            //SemResultados()
+          ].where(notNull).toList(),
         ),
-        Container(
-          width: 320,
-          child: TextField(
-            onChanged: (texto) {
-              textoPesquisa = texto;
-              alternaWidget();
-            },
-            cursorColor: RequisitaCor.requisitaCinza(40),
-            style: TextStyle(fontSize: 18),
-            decoration: InputDecoration(
-                suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 0.0,
-                    )),
-                contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+      )
           ),
-        ),
-        pesquisando ? PrePesquisa() : ListagemDeHinos()
-        //SemResultados()
-      ],
     );
   }
 }
