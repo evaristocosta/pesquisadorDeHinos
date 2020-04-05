@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controlador.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
@@ -18,19 +19,28 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   bool notNull(Object o) => o != null;
   String textoPesquisa = '';
   bool pesquisando = true;
-
   bool fimAnimacao = false;
+  Alignment trocaAlinha = Alignment.center;
+
+  @override
+  void initState() {
+    KeyboardVisibilityNotification().addNewListener(onShow: () {
+      setState(() {
+        trocaAlinha = Alignment.topCenter;
+        fimAnimacao = true;
+      });
+    });
+    super.initState();
+  }
 
   void alternaWidget() {
     if (textoPesquisa.isEmpty) {
       setState(() {
         pesquisando = true;
-        fimAnimacao = false;
       });
     } else {
       setState(() {
         pesquisando = false;
-        fimAnimacao = true;
       });
     }
   }
@@ -41,15 +51,18 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
       body: SafeArea(
           child: AnimatedContainer(
         curve: Curves.easeOut,
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 200),
+        alignment: trocaAlinha,
+        height: double.infinity,
         child: Column(
-          mainAxisAlignment:
-              fimAnimacao ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             fimAnimacao
-                ? null : Center(
+                ? null
+                : Center(
                     child: Container(
-                        width: 240,
+                        width: 180,
                         child: Image(
                           image: AssetImage('assets/logo.png'),
                         )),
@@ -58,14 +71,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
             Center(
               child: Container(
                   margin: EdgeInsets.symmetric(vertical: 20),
-                  height: 36,
+                  width: 160,
                   child: Image(
                     image: AssetImage('assets/titulo.png'),
                   )),
             ),
 
             fimAnimacao
-                ?  null : SizedBox(
+                ? null
+                : SizedBox(
                     height: 40,
                   ),
 
@@ -89,59 +103,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
               ),
             ),
 
-
-            fimAnimacao
-                ? (pesquisando ? PrePesquisa() : ListagemDeHinos())
-                : null,
+            fimAnimacao ? (pesquisando ? prePesquisa() : listaDeHinos()) : null,
             //SemResultados()
           ].where(notNull).toList(),
         ),
-      )
-          ),
+      )),
     );
   }
-}
 
-class SemResultados extends StatelessWidget {
-  const SemResultados({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 22),
-              width: 180,
-              child: Image(
-                image: AssetImage('assets/semAchar.png'),
-              )),
-          Text(
-            'Nenhum hino encontrado',
-            style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 24,
-                color: RequisitaCor.requisitaCinza(30)),
-          ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class PrePesquisa extends StatelessWidget {
-  const PrePesquisa({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Expanded prePesquisa() {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -166,15 +136,8 @@ class PrePesquisa extends StatelessWidget {
       ),
     );
   }
-}
 
-class ListagemDeHinos extends StatelessWidget {
-  const ListagemDeHinos({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Expanded listaDeHinos() {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (context, position) {
@@ -260,6 +223,39 @@ class ListagemDeHinos extends StatelessWidget {
           );
         },
         itemCount: 2,
+      ),
+    );
+  }
+}
+
+class SemResultados extends StatelessWidget {
+  const SemResultados({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+              margin: EdgeInsets.only(bottom: 22),
+              width: 180,
+              child: Image(
+                image: AssetImage('assets/semAchar.png'),
+              )),
+          Text(
+            'Nenhum hino encontrado',
+            style: TextStyle(
+                fontFamily: 'Raleway',
+                fontSize: 24,
+                color: RequisitaCor.requisitaCinza(30)),
+          ),
+          SizedBox(
+            height: 50,
+          )
+        ],
       ),
     );
   }
