@@ -14,45 +14,47 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        alignment: Alignment.topCenter,
-        height: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  width: 160,
-                  child: Image(
-                    image: AssetImage('assets/titulo.png'),
-                  )),
-            ),
-
-            Container(
-              width: 320,
-              child: TextField(
-                autofocus: true,
-                onChanged: (texto) {
-                  textoPesquisa = texto;
-                },
-                cursorColor: RequisitaCor.requisitaCinza(40),
-                style: TextStyle(fontSize: 18),
-                decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(
-                          width: 0.0,
-                        )),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.topCenter,
+          height: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    width: 160,
+                    child: Image(
+                      image: AssetImage('assets/titulo.png'),
+                    )),
               ),
-            ),
 
-            pesquisando ? prePesquisa() : listaDeHinos(),
-            //semResultados()
-          ].where(notNull).toList(),
+              Container(
+                width: 320,
+                child: TextField(
+                  autofocus: true,
+                  onChanged: (texto) {
+                    textoPesquisa = texto;
+                  },
+                  cursorColor: RequisitaCor.requisitaCinza(40),
+                  style: TextStyle(fontSize: 18),
+                  decoration: InputDecoration(
+                      suffixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(
+                            width: 0.0,
+                          )),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+                ),
+              ),
+
+              pesquisando ? prePesquisa() : listaDeHinos(),
+              //semResultados()
+            ].where(notNull).toList(),
+          ),
         ),
       ),
     );

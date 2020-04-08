@@ -8,9 +8,7 @@ class Pesquisador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Página Principal',
-        home: SafeArea(child: PesquisadorApp()),
-        theme: estiloPadrao);
+        title: 'Página Principal', home: PesquisadorApp(), theme: estiloPadrao);
   }
 }
 
@@ -34,48 +32,50 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                    width: 180,
-                    child: Image(
-                      image: AssetImage('assets/logo.png'),
-                    )),
-              ),
-              Center(
-                child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    width: 160,
-                    child: Image(
-                      image: AssetImage('assets/titulo.png'),
-                    )),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                width: 320,
-                child: TextField(
-                  autofocus: false,
-                  cursorColor: RequisitaCor.requisitaCinza(40),
-                  style: TextStyle(fontSize: 18),
-                  decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(
-                            width: 0.0,
-                          )),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.center,
+          height: double.infinity,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                      width: 180,
+                      child: Image(
+                        image: AssetImage('assets/logo.png'),
+                      )),
                 ),
-              ),
-            ]),
+                Center(
+                  child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      width: 160,
+                      child: Image(
+                        image: AssetImage('assets/titulo.png'),
+                      )),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  width: 320,
+                  child: TextField(
+                    autofocus: false,
+                    cursorColor: RequisitaCor.requisitaCinza(40),
+                    style: TextStyle(fontSize: 18),
+                    decoration: InputDecoration(
+                        suffixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(
+                              width: 0.0,
+                            )),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+                  ),
+                ),
+              ]),
+        ),
       ),
     );
   }
