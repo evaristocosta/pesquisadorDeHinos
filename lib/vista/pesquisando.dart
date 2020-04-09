@@ -9,7 +9,7 @@ class PesquisandoApp extends StatefulWidget {
 class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
   String textoPesquisa = '';
-  bool pesquisando = true;
+  bool pesquisando = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,16 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    textoPesquisa = texto;
+                    if (texto.isNotEmpty) {
+                      textoPesquisa = texto;
+                      setState(() {
+                        pesquisando = true;
+                      });
+                    } else {
+                      setState(() {
+                        pesquisando = false;
+                      });
+                    }
                   },
                   cursorColor: RequisitaCor.requisitaCinza(40),
                   style: TextStyle(fontSize: 18),
@@ -51,8 +60,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 ),
               ),
 
-              pesquisando ? prePesquisa() : listaDeHinos(),
-              //semResultados()
+              pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
             ].where(notNull).toList(),
           ),
         ),
@@ -79,126 +87,177 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 color: RequisitaCor.requisitaCinza(30)),
           ),
           SizedBox(
-            height: 50,
-          )
+            height: 10,
+          ),
+          Text("Digite ao menos 3 letras ou 1 dígito numérico")
         ],
       ),
     );
   }
 
-  Expanded listaDeHinos() {
+  Expanded listaDeHinos(String chave) {
     return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, position) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-            child: Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'titulo',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'Raleway',
-                        ),
-                      ),
-                      Text(
-                        'categoria',
-                        style: TextStyle(
-                          color: RequisitaCor.requisitaCinza(30),
-                          fontFamily: 'Raleway',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: Text('parte do hino'),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            'nº',
-                            style: TextStyle(
-                                fontFamily: 'Raleway',
-                                color: RequisitaCor.requisitaAzul(20)),
+      child: FutureBuilder(
+        future: pesquisaBD(chave),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return erro(snapshot.error);
+            } else {
+              List<Map> _lista = snapshot.data;
+              
+              return _lista.length > 0 ? 
+               ListView.builder(
+                itemBuilder: (context, index) {
+                  final _item = _lista[index];
+
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                _item["nome"],
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: 'Raleway',
+                                ),
+                              ),
+                              Text(
+                                _item['categoria'],
+                                style: TextStyle(
+                                  color: RequisitaCor.requisitaCinza(30),
+                                  fontFamily: 'Raleway',
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: Text(_item["texto"]),
+                              )
+                            ],
                           ),
-                          Text(
-                            'XX',
-                            style: TextStyle(
-                                fontFamily: 'Raleway',
-                                color: RequisitaCor.requisitaAzul(30),
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          topLeft: Radius.circular(20),
                         ),
-                        child: Container(
-                            color: RequisitaCor.requisitaAzul(30),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3, horizontal: 6),
-                            child: Text(
-                              'Coletanea',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
-                            )),
-                      )
-                    ],
-                  ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    'nº',
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: RequisitaCor.requisitaAzul(20)),
+                                  ),
+                                  Text(
+                                    _item["numero"].toString(),
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        color: RequisitaCor.requisitaAzul(30),
+                                        fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
+                                ),
+                                child: Container(
+                                    color: RequisitaCor.requisitaAzul(30),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 3, horizontal: 6),
+                                    child: Text(
+                                      _item['coletanea'],
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 10,
+                        )
+                      ],
+                    ),
+                  );
+                },
+                itemCount: _lista.length,
+              )
+              :
+             semResultados();
+            }
+          } else {
+            return Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+                height: 75.0,
+                width: 75.0,
                 ),
-                Container(
-                  height: 10,
-                )
-              ],
-            ),
-          );
+            );
+          }
         },
-        itemCount: 2,
       ),
     );
   }
 
   Widget semResultados() {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 22),
-              width: 180,
-              child: Image(
-                image: AssetImage('assets/semAchar.png'),
-              )),
-          Text(
-            'Nenhum hino encontrado',
-            style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 24,
-                color: RequisitaCor.requisitaCinza(30)),
-          ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+            margin: EdgeInsets.only(bottom: 22),
+            width: 180,
+            child: Image(
+              image: AssetImage('assets/semAchar.png'),
+            )),
+        Text(
+          'Nenhum hino encontrado',
+          style: TextStyle(
+              fontFamily: 'Raleway',
+              fontSize: 24,
+              color: RequisitaCor.requisitaCinza(30)),
+        ),
+        SizedBox(
+          height: 50,
+        )
+      ],
+    );
+  }
+
+  Widget erro(String erro) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+            margin: EdgeInsets.only(bottom: 22),
+            width: 180,
+            child: Image(
+              image: AssetImage('assets/semAchar.png'),
+            )),
+        Text(
+          'Ops! Algo deu errado...',
+          style: TextStyle(
+              fontFamily: 'Raleway',
+              fontSize: 24,
+              color: RequisitaCor.requisitaCinza(30)),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text("Contate o desenvolvedor para solucionar o problema."),
+        Text('Erro: $erro'),
+      ],
     );
   }
 }

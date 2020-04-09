@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import '../modelador.dart';
 
-void pesquisaBD(String chave) async {
+Future<List> pesquisaBD(String chave) async {
   var caminho = await conexaoBD();
 
   // open the database
@@ -13,7 +13,7 @@ void pesquisaBD(String chave) async {
       numero LIKE \'%$chave%\' OR 
       texto LIKE \'%$chave%\'
     """);
-  print(resultado);
 
   await bd.close();
+  return resultado;
 }
