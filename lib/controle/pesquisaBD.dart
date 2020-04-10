@@ -7,12 +7,30 @@ Future<List> pesquisaBD(String chave) async {
   // open the database
   Database bd = await openDatabase(caminho, readOnly: true);
 
-  List<Map> resultado = await bd.rawQuery("""
-    SELECT * FROM hinos WHERE 
+  var pesquisa = """
+    SELECT 
+      idhinos,
+      numero,
+      nome,
+      CASE
+        WHEN INSTR(texto, \'$chave\') > 1 THEN
+          '...' || SUBSTR(texto, INSTR(texto, \'$chave\'), 70) || '...' 
+        ELSE
+          SUBSTR(texto, INSTR(texto, \'$chave\'), 70) || '...' 
+        END texto,
+      categoria,
+      coletanea
+    FROM 
+      hinos
+    WHERE
       nome LIKE \'%$chave%\' OR 
-      numero LIKE \'%$chave%\' OR 
+      numero LIKE \'%$chave%\' OR
       texto LIKE \'%$chave%\'
-    """);
+  """;
+
+  print(pesquisa);
+
+  List<Map> resultado = await bd.rawQuery(pesquisa);
 
   await bd.close();
   return resultado;

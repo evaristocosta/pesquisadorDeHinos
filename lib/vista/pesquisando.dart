@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controlador.dart';
+import 'package:validators/validators.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -30,13 +31,13 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       image: AssetImage('assets/titulo.png'),
                     )),
               ),
-
               Container(
                 width: 320,
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    if (texto.isNotEmpty) {
+                    if (texto.isNotEmpty &&
+                        (isInt(texto) || texto.length >= 3)) {
                       textoPesquisa = texto;
                       setState(() {
                         pesquisando = true;
@@ -59,7 +60,6 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-
               pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
             ].where(notNull).toList(),
           ),
@@ -105,37 +105,96 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
               return erro(snapshot.error);
             } else {
               List<Map> _lista = snapshot.data;
-              
-              return _lista.length > 0 ? 
-               ListView.builder(
-                itemBuilder: (context, index) {
-                  final _item = _lista[index];
 
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    child: Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Expanded(
+              return _lista.length > 0
+                  ? ListView.builder(
+                      itemBuilder: (context, index) {
+                        final _item = _lista[index];
+
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                _item["nome"],
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontFamily: 'Raleway',
-                                ),
-                              ),
-                              Text(
-                                _item['categoria'],
-                                style: TextStyle(
-                                  color: RequisitaCor.requisitaCinza(30),
-                                  fontFamily: 'Raleway',
-                                ),
+                              Flex(
+                                direction: Axis.horizontal,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          _item["nome"],
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontFamily: 'Raleway',
+                                          ),
+                                        ),
+                                        Text(
+                                          _item['categoria'],
+                                          style: TextStyle(
+                                            color:
+                                                RequisitaCor.requisitaCinza(30),
+                                            fontFamily: 'Raleway',
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text(
+                                            'nº',
+                                            style: TextStyle(
+                                                fontFamily: 'Raleway',
+                                                color:
+                                                    RequisitaCor.requisitaAzul(
+                                                        20)),
+                                          ),
+                                          Text(
+                                            _item["numero"].toString(),
+                                            style: TextStyle(
+                                                fontFamily: 'Raleway',
+                                                color:
+                                                    RequisitaCor.requisitaAzul(
+                                                        30),
+                                                fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(20),
+                                          topLeft: Radius.circular(20),
+                                        ),
+                                        child: Container(
+                                            color:
+                                                RequisitaCor.requisitaAzul(30),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 3, horizontal: 6),
+                                            child: Text(
+                                              _item['coletanea'],
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 16.0),
@@ -143,59 +202,11 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                               )
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    'nº',
-                                    style: TextStyle(
-                                        fontFamily: 'Raleway',
-                                        color: RequisitaCor.requisitaAzul(20)),
-                                  ),
-                                  Text(
-                                    _item["numero"].toString(),
-                                    style: TextStyle(
-                                        fontFamily: 'Raleway',
-                                        color: RequisitaCor.requisitaAzul(30),
-                                        fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
-                                ),
-                                child: Container(
-                                    color: RequisitaCor.requisitaAzul(30),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 3, horizontal: 6),
-                                    child: Text(
-                                      _item['coletanea'],
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 12),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 10,
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: _lista.length,
-              )
-              :
-             semResultados();
+                        );
+                      },
+                      itemCount: _lista.length,
+                    )
+                  : semResultados();
             }
           } else {
             return Center(
@@ -203,7 +214,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: CircularProgressIndicator(),
                 height: 75.0,
                 width: 75.0,
-                ),
+              ),
             );
           }
         },
