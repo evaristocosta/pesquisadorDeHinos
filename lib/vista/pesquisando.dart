@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controlador.dart';
 import 'package:validators/validators.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -38,7 +39,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                   onChanged: (texto) {
                     if (texto.isNotEmpty &&
                         (isInt(texto) || texto.length >= 3)) {
-                      textoPesquisa = texto;
+                      textoPesquisa = texto.toUpperCase();
                       setState(() {
                         pesquisando = true;
                       });
@@ -157,7 +158,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                             MainAxisAlignment.end,
                                         children: <Widget>[
                                           Text(
-                                            'nº',
+                                            'nº ',
                                             style: TextStyle(
                                                 fontFamily: 'Raleway',
                                                 color:
@@ -198,7 +199,9 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 16.0),
-                                child: Text(_item["texto"]),
+                                child: Html(
+                                    data: (_item["texto"] as String)
+                                        .replaceAll("\\n\\n", "\\n").replaceAll("\\n", "<br>")),
                               )
                             ],
                           ),
