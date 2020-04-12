@@ -131,14 +131,14 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          _item["nome"],
+                                          _item["nome"] ?? '',
                                           style: TextStyle(
                                             fontSize: 24,
                                             fontFamily: 'Raleway',
                                           ),
                                         ),
                                         Text(
-                                          _item['categoria'],
+                                          _item['categoria'] ?? '',
                                           style: TextStyle(
                                             color:
                                                 RequisitaCor.requisitaCinza(30),
@@ -166,7 +166,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                                         20)),
                                           ),
                                           Text(
-                                            _item["numero"].toString(),
+                                            _item["numero"].toString().isNotEmpty ? _item["numero"].toString() : '',
                                             style: TextStyle(
                                                 fontFamily: 'Raleway',
                                                 color:
@@ -187,7 +187,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 3, horizontal: 6),
                                             child: Text(
-                                              _item['coletanea'],
+                                              _item['coletanea'] ?? '',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12),

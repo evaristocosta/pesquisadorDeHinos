@@ -13,10 +13,10 @@ Future<List> pesquisaBD(String chave) async {
       numero,
       nome,
       CASE
-        WHEN INSTR(texto, \'$chave\') > 1 THEN
-          '...' || SUBSTR(texto, INSTR(texto, \'$chave\'), 70) || '...' 
+        WHEN INSTR(texto, \'$chave\') > 10 THEN
+          '...' || SUBSTR(texto, INSTR(texto, \'$chave\') - 10, 70) || '...' 
         ELSE
-          SUBSTR(texto, INSTR(texto, \'$chave\'), 70) || '...' 
+          SUBSTR(texto, 1, 70) || '...' 
         END texto,
       categoria,
       coletanea
@@ -24,7 +24,7 @@ Future<List> pesquisaBD(String chave) async {
       hinos
     WHERE
       nome LIKE \'%$chave%\' OR 
-      numero LIKE \'%$chave%\' OR
+      numero LIKE \'$chave\' OR
       texto LIKE \'%$chave%\'
   """;
 

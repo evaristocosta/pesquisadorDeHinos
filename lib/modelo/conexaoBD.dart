@@ -8,28 +8,18 @@ Future<String> conexaoBD() async {
   var bdCaminho = await getDatabasesPath();
   var caminho = join(bdCaminho, "pesquisadorHinos.db");
 
-// Check if the database exists
-  var exists = await databaseExists(caminho);
+  // Make sure the parent directory exists
+  try {
+    await Directory(dirname(caminho)).create(recursive: true);
+  } catch (_) {}
 
-  if (!exists) {
-    // Should happen only the first time you launch your application
-    print("Creating new copy from asset");
+  // Copy from asset
+  ByteData data = await rootBundle.load(join("assets", "pesquisadorHinos.db"));
+  List<int> bytes =
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
-    // Make sure the parent directory exists
-    try {
-      await Directory(dirname(caminho)).create(recursive: true);
-    } catch (_) {}
-
-    // Copy from asset
-    ByteData data = await rootBundle.load(join("assets", "pesquisadorHinos.db"));
-    List<int> bytes =
-        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-
-    // Write and flush the bytes written
-    await File(caminho).writeAsBytes(bytes, flush: true);
-  } else {
-    print("Opening existing database");
-  }
+  // Write and flush the bytes written
+  await File(caminho).writeAsBytes(bytes, flush: true);
 
   return caminho;
 }
