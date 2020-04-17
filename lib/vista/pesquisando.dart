@@ -1,7 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controlador.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
+
+class Debouncer {
+  final int milliseconds;
+  VoidCallback action;
+  Timer _timer;
+
+  Debouncer({this.milliseconds});
+
+  run(VoidCallback action) {
+    if (_timer != null) {
+      _timer.cancel();
+    }
+
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
+}
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -12,6 +30,8 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
   String textoPesquisa = '';
   bool pesquisando = false;
+
+  final _debouncer = Debouncer(milliseconds: 800);
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +57,16 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    if (texto.isNotEmpty &&
-                        (isInt(texto) || texto.length >= 3)) {
-                      textoPesquisa = texto.toUpperCase();
-                      setState(() {
-                        pesquisando = true;
-                      });
-                    } else {
-                      setState(() {
-                        pesquisando = false;
-                      });
-                    }
+                    _debouncer.run(() {
+                      if (texto.isNotEmpty &&
+                          (isInt(texto) || texto.length >= 3)) {
+                        setState(() => pesquisando = true);
+                        textoPesquisa = texto.toUpperCase();
+                        print(textoPesquisa);
+                      } else {
+                        setState(() => pesquisando = false);
+                      }
+                    });
                   },
                   cursorColor: RequisitaCor.requisitaCinza(40),
                   style: TextStyle(fontSize: 18),
@@ -166,7 +185,11 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                                         20)),
                                           ),
                                           Text(
-                                            _item["numero"].toString().isNotEmpty ? _item["numero"].toString() : '',
+                                            _item["numero"]
+                                                    .toString()
+                                                    .isNotEmpty
+                                                ? _item["numero"].toString()
+                                                : '',
                                             style: TextStyle(
                                                 fontFamily: 'Raleway',
                                                 color:
@@ -201,7 +224,8 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                 padding: const EdgeInsets.only(top: 16.0),
                                 child: Html(
                                     data: (_item["texto"] as String)
-                                        .replaceAll("\\n\\n", "\\n").replaceAll("\\n", "<br>")),
+                                        .replaceAll("\\n\\n", "\\n")
+                                        .replaceAll("\\n", "<br>")),
                               )
                             ],
                           ),
