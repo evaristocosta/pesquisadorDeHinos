@@ -15,3 +15,7 @@ Para esta versão, estão previstas as seguintes funcionalidades:
 - Pesquisa por tema.
 
 Caso esteja interessado na documentação do software, favor entrar em contato via email.
+
+## Banco de Dados
+
+O [banco de dados](assets/pesquisadorHinos.db) da aplicação foi construído com base no disponibilizado no projeto [projection-html5-icm](https://github.com/italozaina/projection-html5-icm/) de @italozaina. 
