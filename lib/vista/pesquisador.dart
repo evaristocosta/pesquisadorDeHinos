@@ -32,6 +32,13 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Sobre()));
+        },
+        child: Icon(Icons.info_outline, color: Colors.white,),
+      ), */
       body: SafeArea(
         child: Container(
           alignment: Alignment.center,

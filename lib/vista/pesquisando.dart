@@ -5,6 +5,7 @@ import 'package:pesquisadorhinos/controlador.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+// https://stackoverflow.com/a/55119208/10693073
 class Debouncer {
   final int milliseconds;
   VoidCallback action;
@@ -131,103 +132,105 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       itemBuilder: (context, index) {
                         final _item = _lista[index];
 
-                        return Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Flex(
-                                direction: Axis.horizontal,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
+                        final _numero = _item["numero"] == null ? 's/n' : 'nº ';
+
+                        return InkWell(
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Flex(
+                                  direction: Axis.horizontal,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            _item["nome"] ?? '',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontFamily: 'Raleway',
+                                            ),
+                                          ),
+                                          Text(
+                                            _item['categoria'] ?? '',
+                                            style: TextStyle(
+                                              color:
+                                                  RequisitaCor.requisitaCinza(
+                                                      30),
+                                              fontFamily: 'Raleway',
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.end,
                                       children: <Widget>[
-                                        Text(
-                                          _item["nome"] ?? '',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontFamily: 'Raleway',
-                                          ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text(
+                                              _numero,
+                                              style: TextStyle(
+                                                  fontFamily: 'Raleway',
+                                                  color: RequisitaCor
+                                                      .requisitaAzul(20)),
+                                            ),
+                                            Text(
+                                              (_item["numero"]?.toString()) ?? '',
+                                              style: TextStyle(
+                                                  fontFamily: 'Raleway',
+                                                  color: RequisitaCor
+                                                      .requisitaAzul(30),
+                                                  fontSize: 20),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          _item['categoria'] ?? '',
-                                          style: TextStyle(
-                                            color:
-                                                RequisitaCor.requisitaCinza(30),
-                                            fontFamily: 'Raleway',
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(20),
+                                            topLeft: Radius.circular(20),
                                           ),
+                                          child: Container(
+                                              color: RequisitaCor.requisitaAzul(
+                                                  30),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3, horizontal: 6),
+                                              child: Text(
+                                                _item['coletanea'] ?? '',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              )),
                                         )
                                       ],
                                     ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          Text(
-                                            'nº ',
-                                            style: TextStyle(
-                                                fontFamily: 'Raleway',
-                                                color:
-                                                    RequisitaCor.requisitaAzul(
-                                                        20)),
-                                          ),
-                                          Text(
-                                            _item["numero"]
-                                                    .toString()
-                                                    .isNotEmpty
-                                                ? _item["numero"].toString()
-                                                : '',
-                                            style: TextStyle(
-                                                fontFamily: 'Raleway',
-                                                color:
-                                                    RequisitaCor.requisitaAzul(
-                                                        30),
-                                                fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          topLeft: Radius.circular(20),
-                                        ),
-                                        child: Container(
-                                            color:
-                                                RequisitaCor.requisitaAzul(30),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 6),
-                                            child: Text(
-                                              _item['coletanea'] ?? '',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12),
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: Html(
-                                    data: (_item["texto"] as String)
-                                        .replaceAll("\\n\\n", "\\n")
-                                        .replaceAll("\\n", "<br>")),
-                              )
-                            ],
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 16.0),
+                                  child: Html(
+                                      data: (_item["texto"] as String)
+                                          .replaceAll("\\n\\n", "\\n")
+                                          .replaceAll("\\n", " ")),
+                                ),
+                                Divider(),
+                              ],
+                            ),
                           ),
                         );
                       },
