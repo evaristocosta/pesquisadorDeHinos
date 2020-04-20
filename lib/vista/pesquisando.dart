@@ -50,7 +50,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                     margin: EdgeInsets.symmetric(vertical: 20),
                     width: 160,
                     child: Image(
-                      image: AssetImage('assets/titulo.png'),
+                      image: AssetImage('assets/imgs/marca.png'),
                     )),
               ),
               Container(
@@ -98,7 +98,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
               margin: EdgeInsets.only(bottom: 22),
               width: 180,
               child: Image(
-                image: AssetImage('assets/prePesquisa.png'),
+                image: AssetImage('assets/imgs/prePesquisa.png'),
               )),
           Text(
             'Comece a pesquisar...',
@@ -260,7 +260,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             margin: EdgeInsets.only(bottom: 22),
             width: 180,
             child: Image(
-              image: AssetImage('assets/semAchar.png'),
+              image: AssetImage('assets/imgs/semAchar.png'),
             )),
         Text(
           'Nenhum hino encontrado',
@@ -284,7 +284,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             margin: EdgeInsets.only(bottom: 22),
             width: 180,
             child: Image(
-              image: AssetImage('assets/semAchar.png'),
+              image: AssetImage('assets/imgs/semAchar.png'),
             )),
         Text(
           'Ops! Algo deu errado...',

@@ -25,12 +25,22 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  flutter_launcher_icons: ^0.7.4
+
+
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/imgs/icon.png"
+
 
 flutter:
   uses-material-design: true
 
   assets:
-   - assets/
+   - assets/imgs/
+   - assets/bd/
 
   fonts:
     - family: Oxanium

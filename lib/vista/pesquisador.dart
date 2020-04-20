@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pesquisadorhinos/controlador.dart';
 import 'package:pesquisadorhinos/visualizador.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
         title: 'Página Principal', home: PesquisadorApp(), theme: estiloPadrao);
   }
@@ -42,7 +44,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                   child: Container(
                       width: 180,
                       child: Image(
-                        image: AssetImage('assets/logo.png'),
+                        image: AssetImage('assets/imgs/logo.png'),
                       )),
                 ),
                 Center(
@@ -50,7 +52,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                       margin: EdgeInsets.symmetric(vertical: 20),
                       width: 160,
                       child: Image(
-                        image: AssetImage('assets/titulo.png'),
+                        image: AssetImage('assets/imgs/marca.png'),
                       )),
                 ),
                 SizedBox(

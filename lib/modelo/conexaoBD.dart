@@ -14,7 +14,7 @@ Future<String> conexaoBD() async {
   } catch (_) {}
 
   // Copy from asset
-  ByteData data = await rootBundle.load(join("assets", "pesquisadorHinos.db"));
+  ByteData data = await rootBundle.load(join("assets/bd", "pesquisadorHinos.db"));
   List<int> bytes =
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 

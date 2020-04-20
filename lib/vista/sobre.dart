@@ -58,7 +58,7 @@ class _SobreState extends State<Sobre> {
                     child: Container(
                         width: 180,
                         child: Image(
-                          image: AssetImage('assets/logo.png'),
+                          image: AssetImage('assets/imgs/logo.png'),
                         )),
                   ),
                   Center(
@@ -66,7 +66,7 @@ class _SobreState extends State<Sobre> {
                         margin: EdgeInsets.symmetric(vertical: 20),
                         width: 160,
                         child: Image(
-                          image: AssetImage('assets/titulo.png'),
+                          image: AssetImage('assets/imgs/marca.png'),
                         )),
                   ),
                   Center(
