@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
-
 import 'package:pesquisadorhinos/controlador.dart';
 import 'package:pesquisadorhinos/visualizador.dart';
 
@@ -19,26 +17,19 @@ class PesquisadorApp extends StatefulWidget {
 
 class _PesquisadorAppState extends State<PesquisadorApp> {
   @override
-  void initState() {
-    KeyboardVisibilityNotification().addNewListener(onShow: () {
-      setState(() {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => PesquisandoApp()));
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
         onPressed: () {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Sobre()));
+              context, MaterialPageRoute(builder: (context) => Sobre()));
         },
-        child: Icon(Icons.info_outline, color: Colors.white,),
-      ), */
+        child: Icon(
+          Icons.info_outline,
+          color: RequisitaCor.requisitaAzul(30),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           alignment: Alignment.center,
@@ -69,8 +60,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                   width: 320,
                   child: TextField(
                     autofocus: false,
-                    cursorColor: RequisitaCor.requisitaCinza(40),
-                    style: TextStyle(fontSize: 18),
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PesquisandoApp()));
+                      });
+                    },
+                    readOnly: true,
                     decoration: InputDecoration(
                         suffixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
