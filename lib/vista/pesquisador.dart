@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pesquisadorhinos/controlador.dart';
 import 'package:pesquisadorhinos/visualizador.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
         title: 'Página Principal', home: PesquisadorApp(), theme: estiloPadrao);
   }
@@ -18,6 +20,29 @@ class PesquisadorApp extends StatefulWidget {
 }
 
 class _PesquisadorAppState extends State<PesquisadorApp> {
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('on launch $message');
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.getToken().then((token) {
+      print(token);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
