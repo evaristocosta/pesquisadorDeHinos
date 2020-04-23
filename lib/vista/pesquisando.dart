@@ -37,6 +37,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           alignment: Alignment.topCenter,
@@ -81,6 +82,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
+              SizedBox(height: 12,),
               pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
             ].where(notNull).toList(),
           ),
@@ -91,27 +93,30 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
 
   Expanded prePesquisa() {
     return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 22),
-              width: 180,
-              child: Image(
-                image: AssetImage('assets/imgs/prePesquisa.png'),
-              )),
-          Text(
-            'Comece a pesquisar...',
-            style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 24,
-                color: RequisitaCor.requisitaCinza(30)),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text("Digite ao menos 3 letras ou 1 dígito numérico")
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.only(bottom: 22),
+                width: 180,
+                child: Image(
+                  image: AssetImage('assets/imgs/prePesquisa.png'),
+                )),
+            Text(
+              'Comece a pesquisar...',
+              style: TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 24,
+                  color: RequisitaCor.requisitaCinza(30)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text("Digite ao menos 3 letras ou 1 dígito numérico")
+          ],
+        ),
       ),
     );
   }
@@ -138,7 +143,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                           onTap: () {},
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 10),
+                                horizontal: 40, vertical: 12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -157,7 +162,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                           Text(
                                             _item["nome"] ?? '',
                                             style: TextStyle(
-                                              fontSize: 24,
+                                              fontSize: 20,
                                               fontFamily: 'Raleway',
                                             ),
                                           ),
@@ -168,6 +173,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                                   RequisitaCor.requisitaCinza(
                                                       30),
                                               fontFamily: 'Raleway',
+                                              fontSize: 12
                                             ),
                                           )
                                         ],
@@ -214,7 +220,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                                 _item['coletanea'] ?? '',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 12),
+                                                    fontSize: 10),
                                               )),
                                         )
                                       ],
@@ -222,13 +228,14 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
+                                  padding: const EdgeInsets.only(top: 14.0, bottom: 8),
                                   child: Html(
                                       data: (_item["texto"] as String)
                                           .replaceAll("\\n\\n", "\\n")
                                           .replaceAll("\\n", " ")),
+                                          
                                 ),
-                                Divider(),
+                                Divider(color: RequisitaCor.requisitaCinza(40),),
                               ],
                             ),
                           ),
@@ -253,26 +260,29 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   }
 
   Widget semResultados() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(bottom: 22),
-            width: 180,
-            child: Image(
-              image: AssetImage('assets/imgs/semAchar.png'),
-            )),
-        Text(
-          'Nenhum hino encontrado',
-          style: TextStyle(
-              fontFamily: 'Raleway',
-              fontSize: 24,
-              color: RequisitaCor.requisitaCinza(30)),
-        ),
-        SizedBox(
-          height: 50,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 50),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              margin: EdgeInsets.only(bottom: 22),
+              width: 180,
+              child: Image(
+                image: AssetImage('assets/imgs/semAchar.png'),
+              )),
+          Text(
+            'Nenhum hino encontrado',
+            style: TextStyle(
+                fontFamily: 'Raleway',
+                fontSize: 24,
+                color: RequisitaCor.requisitaCinza(30)),
+          ),
+          SizedBox(
+            height: 50,
+          )
+        ],
+      ),
     );
   }
 
