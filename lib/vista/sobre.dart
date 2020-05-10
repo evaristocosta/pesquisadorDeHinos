@@ -29,6 +29,14 @@ class _SobreState extends State<Sobre> {
     });
   }
 
+  _acessarPagina() async {
+    const url = 'https://evaristocosta.github.io/pesquisadorDeHinos/';
+    if (await canLaunch(url))
+      await launch(url);
+    else
+      throw 'Não foi possível abrir o site';
+  }
+
   _acessarRepositorio() async {
     const url = 'https://github.com/evaristocosta/pesquisadorDeHinos';
     if (await canLaunch(url))
@@ -112,6 +120,13 @@ class _SobreState extends State<Sobre> {
                             fontFamily: 'Raleway',
                           ),
                         ),
+
+                        FlatButton(
+                            padding: EdgeInsets.all(0),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onPressed: _acessarPagina,
+                            child: Text('Página do app', style: TextStyle(fontWeight: FontWeight.bold),)),
                         
                         FlatButton(
                             padding: EdgeInsets.all(0),

@@ -1,5 +1,7 @@
 # Qual é o hino?
 
+![versão](https://img.shields.io/github/v/release/evaristocosta/pesquisadorDeHinos) ![linguagem](https://img.shields.io/github/languages/top/evaristocosta/pesquisadorDeHinos) ![licença](https://img.shields.io/github/license/evaristocosta/pesquisadorDeHinos)
+
 O aplicativo Pesquisador de Hinos, com marca "Qual é o hino?", tem por objetivo facilitar a pesquisa em hinários evangélicos específicos. Surge da
 necessidade de agilidade para pesquisa de canções disponíveis nos diversos hinários utilizados
 por cantores e instrumentistas em igrejas. Esta primeira
