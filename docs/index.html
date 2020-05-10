@@ -10,6 +10,8 @@
     <meta
       content="Explicativo e centro de atualizações do app Pesquisador de Hinos"
     />
+
+    <!-- Bootstrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -31,14 +33,92 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Fancybox -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#344d6b" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <style>
+      h1 {
+        color: #344d6b;
+      }
+      h2,
+      h3 {
+        color: #586d88;
+      }
+      .titulo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .titulo img {
+        max-height: 54px;
+        margin-right: 16px;
+      }
+      .download {
+        max-width: 320px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+      .telas {
+        overflow: auto;
+        white-space: nowrap;
+        margin-bottom: 12px;
+      }
+      .telas img {
+        display: inline-block;
+        max-height: 500px;
+        padding: 12px;
+      }
+
+      @media only screen and (max-width: 576px) {
+        .telas img {
+          max-height: 300px;
+        }
+      }
+
+      footer {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #8d8d8d;
+      }
+    </style>
   </head>
   <body>
-    <header><br /></header>
+    <header>
+      <br />
+      <div class="container titulo">
+        <img src="icone.png" alt="icone" />
+        <h1>Qual é o hino?</h1>
+      </div>
+    </header>
     <div class="container">
-      <h1>Qual é o hino?</h1>
-      <img src="https://img.shields.io/github/v/release/evaristocosta/pesquisadorDeHinos" alt="versao">
-      <img src="https://img.shields.io/github/languages/top/evaristocosta/pesquisadorDeHinos" alt="linguagem">
-      <img src="https://img.shields.io/github/license/evaristocosta/pesquisadorDeHinos" alt="licenca">
+      <img
+        src="https://img.shields.io/github/v/release/evaristocosta/pesquisadorDeHinos"
+        alt="versao"
+      />
+      <img
+        src="https://img.shields.io/github/languages/top/evaristocosta/pesquisadorDeHinos"
+        alt="linguagem"
+      />
+      <img
+        src="https://img.shields.io/github/license/evaristocosta/pesquisadorDeHinos"
+        alt="licenca"
+      />
       <p>
         <br />
         O aplicativo Pesquisador de Hinos, chamado de "Qual é o hino?", tem por
@@ -49,11 +129,28 @@
         ferramenta de pesquisa rápida.
       </p>
       <p>
-        Download da versão mais recente:<br /><a
-          href="https://github.com/evaristocosta/pesquisadorDeHinos/releases/download/v0.1.0/v0.1.0.apk"
-          >Versão 0.1.0</a
-        >
+        <strong>Download da versão mais recente:</strong>
       </p>
+      <a
+        href="https://github.com/evaristocosta/pesquisadorDeHinos/releases/download/v0.1.0/v0.1.0.apk"
+        ><img class="download img-fluid" src="download.png" alt="download"
+      /></a>
+
+      <p><strong>Preview:</strong></p>
+      <div class="telas">
+        <a data-fancybox="gallery" href="telas/inicio.png"
+          ><img src="telas/inicio.png" alt="tela1"
+        /></a>
+        <a data-fancybox="gallery" href="telas/pesquisa1.png"
+          ><img src="telas/pesquisa1.png" alt="tela2"
+        /></a>
+        <a data-fancybox="gallery" href="telas/pesquisa2.png"
+          ><img src="telas/pesquisa2.png" alt="tela3"
+        /></a>
+        <a data-fancybox="gallery" href="telas/pesquisa3.png"
+          ><img src="telas/pesquisa3.png" alt="tela4"
+        /></a>
+      </div>
 
       <p>
         Para esta versão, estão previstas as seguintes funcionalidades:
@@ -61,23 +158,93 @@
       <ul>
         <li>Pesquisa pelo número do hino, independente do hinário;</li>
         <li>Pesquisa por nome real ou conhecido;</li>
-        <li>Pesquisa com parte da letra ou palavras-chave</li>
+        <li>Pesquisa com parte da letra ou palavras-chave.</li>
+      </ul>
+
+      <p>Para versões futuras:</p>
+      <ul>
+        <li>Grifar o texto pesquisado nos resultados;</li>
+        <li>
+          Listas de louvores organizadas por:
+          <ul>
+            <li>Tema;</li>
+            <li>Coletânea;</li>
+            <li>Sugestão para cultos especiais;</li>
+          </ul>
+        </li>
+        <li>Exibir texto todo do hino.</li>
       </ul>
 
       <h2>Instalação</h2>
       <p>
-        <strong>ATENÇÃO:</strong> Para obter sucesso na instalação do aplicativo
-        no seu smartphone, é necessário permitir a instalação de aplicativos de
-        fontes desconhecidas nas configurações do dispositivo.
+        Para obter sucesso na instalação do aplicativo no seu smartphone, é
+        necessário permitir a instalação de aplicativos de fontes desconhecidas
+        nas configurações do dispositivo.
+      </p>
+      <p>
+        Você pode encontrar algumas referências e tutoriais
+        <a
+          href="https://www.tudocelular.com/curiosidade/noticias/n139751/como-instalar-apps-fontes-desconhecidas-android.html"
+          >aqui</a
+        >,
+        <a
+          href="https://tecnoblog.net/221892/fontes-desconhecidas-android-oreo/"
+          >aqui</a
+        >
+        ou
+        <a
+          href="https://www.imperioteck.com/como-ativar-fontes-desconhecidas-no-redmi-note-8-e-outros-xiaomi/"
+          >aqui</a
+        >.
       </p>
       <p>
         <strong>Para atualizar,</strong> pode ser necessário antes ter que
         desinstalar a versão anterior.
       </p>
+      <p>
+        Esse é um procedimento temporário, tendo em vista que o aplicativo ainda
+        não se encontra nas lojas oficiais.
+      </p>
 
       <h2>Direitos autorais</h2>
-      <p>Texto</p>
+      <p>
+        O Pesquisador de Hinos é um aplicativo gratuito e de código-aberto. Não
+        há quaisquer fins lucrativos visando sua utilização, sem anúncios ou
+        qualquer tipo de propaganda. Os dados utilizados para construção da base
+        de dados estão disponíveis online e através da consulta dos Hinários de
+        distribuição interna da Igreja Cristã Maranta. Faz-se referência aos
+        seguintes Hinários:
+      </p>
+      <ul>
+        <li>
+          COLETÂNEA DE HINOS. Maranata: O Senhor Jesus Vem! Aleluia e Glória ao
+          Rei. Distribuição interna, I.C.M., 2018.
+        </li>
+        <li>
+          COLETÂNEA DE HINOS: CRIANÇAS, INTERMEDIÁRIOS E ADOLESCENTES. Maranata:
+          O Senhor Jesus Vem! Aleluia e Glória ao Rei. Distribuição interna,
+          I.C.M., 2018.
+        </li>
+      </ul>
 
+      <h3>Desenvolvimento</h3>
+      <p>O desenvolvimento do aplicativo é atualmente mantido por:</p>
+      <ul>
+        <li>
+          Lucas Costa (<a href="mailto:lucascosta74@gmail.com"
+            >lucascosta74@gmail.com</a
+          >).
+        </li>
+      </ul>
+      <h3>Imagens</h3>
+      <p>
+        As imagens utilizadas para confecção da logo do aplicativo são de
+        autoria de:
+      </p>
+      <ul>
+        <li>Smashicons</li>
+        <li>Those Icons</li>
+      </ul>
       <h3>Banco de Dados</h3>
       <p>
         O banco de dados da aplicação foi construído com base no disponibilizado
@@ -92,5 +259,9 @@
         contato via email.
       </p>
     </div>
+
+    <footer>
+      Desenvolvido por Lucas Costa (2020)
+    </footer>
   </body>
 </html>

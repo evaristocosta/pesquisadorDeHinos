@@ -14,7 +14,6 @@ Para esta versão, estão previstas as seguintes funcionalidades:
 - Pesquisa pelo número do hino, independente do hinário;
 - Pesquisa por nome real ou conhecido;
 - Pesquisa com parte da letra ou palavras-chave;
-- Pesquisa por tema.
 
 Caso esteja interessado na documentação do software, favor entrar em contato via email.
 
