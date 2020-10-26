@@ -48,14 +48,15 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             children: [
               Center(
                 child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
+                    margin: EdgeInsets.only(top: 26),
                     width: 160,
                     child: Image(
                       image: AssetImage('assets/imgs/marca.png'),
                     )),
               ),
               Container(
-                width: 320,
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
@@ -82,7 +83,6 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-              SizedBox(height: 12,),
               pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
             ].where(notNull).toList(),
           ),
@@ -143,7 +143,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                           onTap: () {},
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 12),
+                                horizontal: 24, vertical: 12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -169,12 +169,11 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                           Text(
                                             _item['categoria'] ?? '',
                                             style: TextStyle(
-                                              color:
-                                                  RequisitaCor.requisitaCinza(
-                                                      30),
-                                              fontFamily: 'Raleway',
-                                              fontSize: 12
-                                            ),
+                                                color:
+                                                    RequisitaCor.requisitaCinza(
+                                                        30),
+                                                fontFamily: 'Raleway',
+                                                fontSize: 12),
                                           )
                                         ],
                                       ),
@@ -197,7 +196,8 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                                       .requisitaAzul(20)),
                                             ),
                                             Text(
-                                              (_item["numero"]?.toString()) ?? '',
+                                              (_item["numero"]?.toString()) ??
+                                                  '',
                                               style: TextStyle(
                                                   fontFamily: 'Raleway',
                                                   color: RequisitaCor
@@ -228,14 +228,16 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 14.0, bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      top: 14.0, bottom: 8),
                                   child: Html(
                                       data: (_item["texto"] as String)
                                           .replaceAll("\\n\\n", "\\n")
                                           .replaceAll("\\n", " ")),
-                                          
                                 ),
-                                Divider(color: RequisitaCor.requisitaCinza(40),),
+                                Divider(
+                                  color: RequisitaCor.requisitaCinza(40),
+                                ),
                               ],
                             ),
                           ),
