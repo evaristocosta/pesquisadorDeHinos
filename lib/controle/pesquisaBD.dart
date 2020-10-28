@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
-import '../modelador.dart';
+import '../controlador.dart';
 
 Future<List> pesquisaBD(String chave) async {
   var caminho = await conexaoBD();
@@ -42,8 +42,6 @@ Future<List> pesquisaBD(String chave) async {
         nome LIKE \'%$chave%\' OR 
         texto LIKE \'%$chave%\'
     """;
-
-  //print(pesquisa);
 
   List<Map> resultado = await bd.rawQuery(pesquisa);
 

@@ -1,26 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/controlador.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
-
-// https://stackoverflow.com/a/55119208/10693073
-class Debouncer {
-  final int milliseconds;
-  VoidCallback action;
-  Timer _timer;
-
-  Debouncer({this.milliseconds});
-
-  run(VoidCallback action) {
-    if (_timer != null) {
-      _timer.cancel();
-    }
-
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
-  }
-}
+import '../controlador.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -71,7 +52,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       }
                     });
                   },
-                  cursorColor: RequisitaCor.requisitaCinza(40),
+                  cursorColor: RequisitaEstilo.cinza(40),
                   style: TextStyle(fontSize: 18),
                   decoration: InputDecoration(
                       suffixIcon: Icon(Icons.search),
@@ -109,7 +90,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
               style: TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 24,
-                  color: RequisitaCor.requisitaCinza(30)),
+                  color: RequisitaEstilo.cinza(30)),
             ),
             SizedBox(
               height: 10,
@@ -137,7 +118,14 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       itemBuilder: (context, index) {
                         final _item = _lista[index];
 
-                        final _numero = _item["numero"] == null ? 's/n' : 'nº ';
+                        final _numero = _item["numero"];
+                        final _indicador = _numero == null ? 's/n' : 'nº ';
+                        final _nome = _item["nome"];
+                        final _categoria = _item['categoria'];
+                        final _coletanea = _item['coletanea'];
+                        final _texto = (_item["texto"] as String)
+                            .replaceAll("\\n\\n", "\\n")
+                            .replaceAll("\\n", " ");
 
                         return InkWell(
                           onTap: () {},
@@ -160,18 +148,17 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
-                                            _item["nome"] ?? '',
+                                            _nome ?? '',
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontFamily: 'Raleway',
                                             ),
                                           ),
                                           Text(
-                                            _item['categoria'] ?? '',
+                                            _categoria ?? '',
                                             style: TextStyle(
                                                 color:
-                                                    RequisitaCor.requisitaCinza(
-                                                        30),
+                                                    RequisitaEstilo.cinza(30),
                                                 fontFamily: 'Raleway',
                                                 fontSize: 12),
                                           )
@@ -189,19 +176,18 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                               MainAxisAlignment.end,
                                           children: <Widget>[
                                             Text(
-                                              _numero,
+                                              _indicador,
                                               style: TextStyle(
                                                   fontFamily: 'Raleway',
-                                                  color: RequisitaCor
-                                                      .requisitaAzul(20)),
+                                                  color:
+                                                      RequisitaEstilo.azul(20)),
                                             ),
                                             Text(
-                                              (_item["numero"]?.toString()) ??
-                                                  '',
+                                              (_numero?.toString()) ?? '',
                                               style: TextStyle(
                                                   fontFamily: 'Raleway',
-                                                  color: RequisitaCor
-                                                      .requisitaAzul(30),
+                                                  color:
+                                                      RequisitaEstilo.azul(30),
                                                   fontSize: 20),
                                             ),
                                           ],
@@ -212,12 +198,11 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                             topLeft: Radius.circular(20),
                                           ),
                                           child: Container(
-                                              color: RequisitaCor.requisitaAzul(
-                                                  30),
+                                              color: RequisitaEstilo.azul(30),
                                               padding: EdgeInsets.symmetric(
                                                   vertical: 3, horizontal: 6),
                                               child: Text(
-                                                _item['coletanea'] ?? '',
+                                                _coletanea ?? '',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 10),
@@ -228,15 +213,13 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 14.0, bottom: 8),
-                                  child: Html(
-                                      data: (_item["texto"] as String)
-                                          .replaceAll("\\n\\n", "\\n")
-                                          .replaceAll("\\n", " ")),
-                                ),
+                                    padding: const EdgeInsets.only(
+                                        top: 14.0, bottom: 8),
+                                    child: Html(
+                                      data: _texto,
+                                    )),
                                 Divider(
-                                  color: RequisitaCor.requisitaCinza(40),
+                                  color: RequisitaEstilo.cinza(40),
                                 ),
                               ],
                             ),
@@ -278,7 +261,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             style: TextStyle(
                 fontFamily: 'Raleway',
                 fontSize: 24,
-                color: RequisitaCor.requisitaCinza(30)),
+                color: RequisitaEstilo.cinza(30)),
           ),
           SizedBox(
             height: 50,
@@ -303,7 +286,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
           style: TextStyle(
               fontFamily: 'Raleway',
               fontSize: 24,
-              color: RequisitaCor.requisitaCinza(30)),
+              color: RequisitaEstilo.cinza(30)),
         ),
         SizedBox(
           height: 10,

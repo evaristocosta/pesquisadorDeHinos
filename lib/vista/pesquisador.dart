@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pesquisadorhinos/controlador.dart';
-import 'package:pesquisadorhinos/visualizador.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
+import '../controlador.dart';
+import '../visualizador.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
@@ -10,7 +11,9 @@ class Pesquisador extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-        title: 'Página Principal', home: PesquisadorApp(), theme: estiloPadrao);
+        title: 'Página Principal',
+        home: PesquisadorApp(),
+        theme: RequisitaEstilo.tema());
   }
 }
 
@@ -54,7 +57,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         },
         child: Icon(
           Icons.info_outline,
-          color: RequisitaCor.requisitaAzul(30),
+          color: RequisitaEstilo.azul(30),
         ),
       ),
       body: SafeArea(

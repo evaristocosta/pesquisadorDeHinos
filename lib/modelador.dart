@@ -1,2 +1,2 @@
-export 'modelo/coresPadrao.dart';
-export 'modelo/conexaoBD.dart';
+export 'modelo/estilo.dart';
+export 'modelo/hino.dart';
