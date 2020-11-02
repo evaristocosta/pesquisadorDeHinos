@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:pesquisadorhinos/modelo/hino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
 import '../controlador.dart';
@@ -44,7 +47,8 @@ Future<List> pesquisaBD(String chave) async {
     """;
 
   List<Map> resultado = await bd.rawQuery(pesquisa);
+  List<Hino> hinos = hinoFromJson(jsonEncode(resultado));
 
   await bd.close();
-  return resultado;
+  return hinos;
 }

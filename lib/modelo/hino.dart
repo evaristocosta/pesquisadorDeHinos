@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+List<Hino> hinoFromJson(String str) =>
+    List<Hino>.from(json.decode(str).map((x) => Hino.fromJson(x)));
+
 class Hino {
-  String numero;
+  int numero;
   String nome;
   String categoria;
   String coletanea;
