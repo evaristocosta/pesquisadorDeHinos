@@ -1,9 +1,9 @@
 ---
-nome: Notificação de problema
-sobre: Crie um problema para ajudar no desenvolvimento
+name: Notificação de problema
+about: Crie um problema para ajudar no desenvolvimento
 título: ''
 labels: bug
-responsáveis: evaristocosta
+assignees: evaristocosta
 
 ---
 
