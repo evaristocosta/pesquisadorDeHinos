@@ -11,19 +11,19 @@ Comprometemo-nos a agir e interagir de maneiras que contribuam para uma comunida
 
 Exemplos de comportamentos que contribuem para criar um ambiente positivo para a nossa comunidade incluem:
 
-* Demonstrar empatia e bondade com as outras pessoas
-* Respeitar opiniões, pontos de vista e experiências contrárias
-* Dar e receber feedbacks construtivos de maneira respeitosa
-* Assumir responsabilidade, pedir desculpas às pessoas afetadas por nossos erros e aprender com a experiência
-* Focar no que é melhor não só para nós individualmente, mas para a comunidade em geral
+*   Demonstrar empatia e bondade com as outras pessoas
+*   Respeitar opiniões, pontos de vista e experiências contrárias
+*   Dar e receber feedbacks construtivos de maneira respeitosa
+*   Assumir responsabilidade, pedir desculpas às pessoas afetadas por nossos erros e aprender com a experiência
+*   Focar no que é melhor não só para nós individualmente, mas para a comunidade em geral
 
 Exemplos de comportamentos inaceitáveis incluem:
 
-* Uso de linguagem ou imagens sexualizadas, bem como o assédio sexual ou de qualquer natureza
-* Comentários insultuosos/depreciativos e ataques pessoais ou políticos (*Trolling*)
-* Assédio público ou privado
-* Publicar informações particulares de outras pessoas, como um endereço de e-mail ou endereço físico, sem a permissão explícita delas
-* Outras condutas que são normalmente consideradas inapropriadas em um ambiente profissional
+*   Uso de linguagem ou imagens sexualizadas, bem como o assédio sexual ou de qualquer natureza
+*   Comentários insultuosos/depreciativos e ataques pessoais ou políticos (*Trolling*)
+*   Assédio público ou privado
+*   Publicar informações particulares de outras pessoas, como um endereço de e-mail ou endereço físico, sem a permissão explícita delas
+*   Outras condutas que são normalmente consideradas inapropriadas em um ambiente profissional
 
 ## Aplicação das nossas responsabilidades
 
@@ -38,7 +38,7 @@ Exemplos de representação da nossa comunidade incluem usar um endereço de e-m
 
 ## Aplicação
 
-Ocorrências de comportamentos abusivos, de assédio ou que sejam inaceitáveis por qualquer outro motivo poderão ser reportadas para a liderança da comunidade, responsável pela aplicação, via contato <lucascosta74@gmail.com>.
+Ocorrências de comportamentos abusivos, de assédio ou que sejam inaceitáveis por qualquer outro motivo poderão ser reportadas para a liderança da comunidade, responsável pela aplicação, via contato <[lucascosta74@gmail.com](mailto:lucascosta74@gmail.com)>.
 
 Todas as reclamações serão revisadas e investigadas imediatamente e de maneira justa.
 
@@ -74,14 +74,9 @@ A liderança da comunidade seguirá estas Diretrizes de Impacto na Comunidade pa
 
 ## Atribuição
 
-Este Código de Conduta é adaptado do [Contributor Covenant][homepage],
-versão 2.0, disponível em
-https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+Este Código de Conduta é adaptado do [Contributor Covenant](https://www.contributor-covenant.org),
+versão 2.0, disponível [clicando aqui](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html).
 
 As Diretrizes de Impacto na Comunidade foram inspiradas pela [Aplicação do código de conduta Mozilla](https://github.com/mozilla/diversity).
 
-[homepage]: https://www.contributor-covenant.org
-
-Para obter respostas a perguntas comuns sobre este código de conduta, veja a página de Perguntas Frequentes (*FAQ*) em
-https://www.contributor-covenant.org/faq. Traduções estão disponíveis em
-https://www.contributor-covenant.org/translations.
+Para obter respostas a perguntas comuns sobre este código de conduta, veja a página de [Perguntas Frequentes (*FAQ*)](https://www.contributor-covenant.org/faq). Traduções estão disponíveis [aqui](https://www.contributor-covenant.org/translations).
