@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/modelo/hino.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
 import '../controlador.dart';
@@ -14,7 +13,20 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   String textoPesquisa = '';
   bool pesquisando = false;
 
+  PesquisaBD pesquisador;
+
   final _debouncer = Debouncer(milliseconds: 800);
+
+  @override
+  void initState() {
+    pesquisador = new PesquisaBD();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +54,12 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    _debouncer.run(() {
+                    _debouncer.run(() async {
                       if (texto.isNotEmpty &&
                           (isInt(texto) || texto.length >= 3)) {
-                        setState(() => pesquisando = true);
                         textoPesquisa = texto.toUpperCase();
+                        await pesquisador.realizaPesquisa(textoPesquisa);
+                        setState(() => pesquisando = true);
                       } else {
                         setState(() => pesquisando = false);
                       }
@@ -64,7 +77,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-              pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
+              pesquisando ? listaDeHinos() : prePesquisa(),
             ].where(notNull).toList(),
           ),
         ),
@@ -102,43 +115,31 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
     );
   }
 
-  Expanded listaDeHinos(String chave) {
+  Expanded listaDeHinos() {
+    bool taCarregando = false;
+
     return Expanded(
-      child: FutureBuilder(
-        future: pesquisaBD(chave),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return erro(snapshot.error);
-            } else {
-              return resultados(snapshot);
-            }
-          } else {
-            return Center(
-              child: SizedBox(
-                child: CircularProgressIndicator(),
-                height: 75.0,
-                width: 75.0,
-              ),
-            );
-          }
-        },
-      ),
-    );
+        child: taCarregando
+            ? Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 75.0,
+                  width: 75.0,
+                ),
+              )
+            : resultados());
   }
 
-  Widget resultados(AsyncSnapshot snapshot) {
-    List<Hino> listaHinos = snapshot.data;
-
-    return listaHinos.length > 0
-        ? resultadosPesquisa(listaHinos)
+  Widget resultados() {
+    return pesquisador?.quantidadeHinos != null
+        ? resultadosPesquisa()
         : semResultados();
   }
 
-  ListView resultadosPesquisa(List<Hino> listaHinos) {
+  ListView resultadosPesquisa() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        final hino = listaHinos[index];
+        final hino = pesquisador.hinos[index];
 
         final _numero = hino.numero;
         final _indicador = _numero == null ? 's/n' : 'nº ';
@@ -236,7 +237,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
           ),
         );
       },
-      itemCount: listaHinos.length,
+      itemCount: pesquisador.quantidadeHinos,
     );
   }
 

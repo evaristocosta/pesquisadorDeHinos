@@ -5,50 +5,58 @@ import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
 import '../controlador.dart';
 
-Future<List> pesquisaBD(String chave) async {
-  var caminho = await conexaoBD();
-  var pesquisa;
+class PesquisaBD {
+  List<Hino> hinos;
 
-  // open the database
-  Database bd = await openDatabase(caminho, readOnly: true);
+  int get quantidadeHinos {
+    return hinos.length;
+  }
 
-  isInt(chave)
-      ? pesquisa = """
-      SELECT 
-        idhinos,
-        numero,
-        nome,
-        SUBSTR(texto, 1, 70) || '...' texto,
-        categoria,
-        coletanea
-      FROM 
-        hinos
-      WHERE
-        numero LIKE \'$chave\' 
-    """
-      : pesquisa = """
-      SELECT 
-        idhinos,
-        numero,
-        nome,
-        CASE
-          WHEN INSTR(texto, \'$chave\') > 10 THEN
-            '...' || SUBSTR(texto, INSTR(texto, \'$chave\') - 10, 70) || '...' 
-          ELSE
-            SUBSTR(texto, 1, 70) || '...' 
-          END texto,
-        categoria,
-        coletanea
-      FROM 
-        hinos
-      WHERE
-        nome LIKE \'%$chave%\' OR 
-        texto LIKE \'%$chave%\'
-    """;
+  Future<bool> realizaPesquisa(String chave) async {
+    var caminho = await conexaoBD();
+    var pesquisa;
 
-  List<Map> resultado = await bd.rawQuery(pesquisa);
-  List<Hino> hinos = hinoFromJson(jsonEncode(resultado));
+    // open the database
+    Database bd = await openDatabase(caminho, readOnly: true);
 
-  await bd.close();
-  return hinos;
+    isInt(chave)
+        ? pesquisa = """
+        SELECT 
+          idhinos,
+          numero,
+          nome,
+          SUBSTR(texto, 1, 70) || '...' texto,
+          categoria,
+          coletanea
+        FROM 
+          hinos
+        WHERE
+          numero LIKE \'$chave\' 
+      """
+        : pesquisa = """
+        SELECT 
+          idhinos,
+          numero,
+          nome,
+          CASE
+            WHEN INSTR(texto, \'$chave\') > 10 THEN
+              '...' || SUBSTR(texto, INSTR(texto, \'$chave\') - 10, 70) || '...' 
+            ELSE
+              SUBSTR(texto, 1, 70) || '...' 
+            END texto,
+          categoria,
+          coletanea
+        FROM 
+          hinos
+        WHERE
+          nome LIKE \'%$chave%\' OR 
+          texto LIKE \'%$chave%\'
+      """;
+
+    List<Map> resultado = await bd.rawQuery(pesquisa);
+    hinos = hinoFromJson(jsonEncode(resultado));
+
+    await bd.close();
+    return true;
+  }
 }
