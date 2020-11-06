@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
 
-import 'conexaoBD.dart';
+import 'conectaBancoDeDados.dart';
 import 'package:pesquisadorhinos/modelo/hino.dart';
 
-class PesquisaBD {
+class ControlaPesquisa {
   List<Hino> hinos;
 
   int get quantidadeHinos {
@@ -13,7 +13,7 @@ class PesquisaBD {
   }
 
   Future<bool> realizaPesquisa(String chave) async {
-    var caminho = await conexaoBD();
+    var caminho = await conectaBancoDeDados();
     var pesquisa;
 
     // open the database

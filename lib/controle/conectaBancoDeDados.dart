@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
-Future<String> conexaoBD() async {
+Future<String> conectaBancoDeDados() async {
   var bdCaminho = await getDatabasesPath();
   var caminho = join(bdCaminho, "pesquisadorHinos.db");
 

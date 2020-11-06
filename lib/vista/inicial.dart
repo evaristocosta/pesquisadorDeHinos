@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:pesquisadorhinos/controle/requisicaoEstilos.dart';
+import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/vista/pesquisando.dart';
 import 'package:pesquisadorhinos/vista/sobre.dart';
 

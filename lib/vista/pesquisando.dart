@@ -3,8 +3,8 @@ import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:pesquisadorhinos/controle/debouncer.dart';
-import 'package:pesquisadorhinos/controle/pesquisaBD.dart';
-import 'package:pesquisadorhinos/controle/requisicaoEstilos.dart';
+import 'package:pesquisadorhinos/controle/controlaPesquisa.dart';
+import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -16,13 +16,13 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   String textoPesquisa = '';
   bool pesquisando = false;
 
-  PesquisaBD pesquisador;
+  ControlaPesquisa pesquisador;
 
   final _debouncer = Debouncer(milliseconds: 800);
 
   @override
   void initState() {
-    pesquisador = new PesquisaBD();
+    pesquisador = new ControlaPesquisa();
     super.initState();
   }
 
