@@ -9,6 +9,7 @@ class Hino {
   String categoria;
   String coletanea;
   String texto;
+  String indicador;
 
   Hino({
     this.numero,
@@ -24,15 +25,5 @@ class Hino {
     categoria = json['categoria'];
     coletanea = json['coletanea'];
     texto = json['texto'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['numero'] = this.numero;
-    data['nome'] = this.nome;
-    data['categoria'] = this.categoria;
-    data['coletanea'] = this.coletanea;
-    data['texto'] = this.texto;
-    return data;
   }
 }

@@ -30,12 +30,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
+      // ignore: missing_return
       onMessage: (Map<String, dynamic> message) {
         print('on message $message');
       },
+      // ignore: missing_return
       onResume: (Map<String, dynamic> message) {
         print('on resume $message');
       },
+      // ignore: missing_return
       onLaunch: (Map<String, dynamic> message) {
         print('on launch $message');
       },

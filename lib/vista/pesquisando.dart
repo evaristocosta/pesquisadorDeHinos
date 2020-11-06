@@ -13,13 +13,12 @@ class PesquisandoApp extends StatefulWidget {
 
 class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
-  String textoPesquisa = '';
-  bool pesquisando = false;
+  final debouncer = Debouncer(milliseconds: 400);
 
   ControlaPesquisa pesquisador;
 
-  final _debouncer = Debouncer(milliseconds: 800);
-
+  bool taPesquisando = false;
+  bool taCarregando = true;
   var prePesquisa = {
     'img': 'assets/imgs/prePesquisa.png',
     'titulo': 'Comece a pesquisar...',
@@ -68,14 +67,19 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    _debouncer.run(() async {
+                    debouncer.run(() async {
                       if (texto.isNotEmpty &&
                           (isInt(texto) || texto.length >= 3)) {
-                        textoPesquisa = texto.toUpperCase();
-                        await pesquisador.realizaPesquisa(textoPesquisa);
-                        setState(() => pesquisando = true);
+                        setState(() {
+                          taPesquisando = true;
+                          taCarregando = true;
+                        });
+
+                        await pesquisador.realizaPesquisa(texto.toUpperCase());
+
+                        setState(() => taCarregando = false);
                       } else {
-                        setState(() => pesquisando = false);
+                        setState(() => taPesquisando = false);
                       }
                     });
                   },
@@ -91,10 +95,124 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-              pesquisando ? listaDeHinos() : informativo(prePesquisa),
+              taPesquisando ? carregandoPesquisa() : informativo(prePesquisa),
             ].where(notNull).toList(),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget carregandoPesquisa() {
+    return Container(
+        child: taCarregando
+            ? Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 75.0,
+                  width: 75.0,
+                ),
+              )
+            : pesquisador.quantidadeHinos == 0
+                ? informativo(semResultados)
+                : resultadosPesquisa());
+  }
+
+  Widget resultadosPesquisa() {
+    return Expanded(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          final hino = pesquisador.hinos[index];
+
+          return InkWell(
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              hino.nome,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Raleway',
+                              ),
+                            ),
+                            Text(
+                              hino.categoria,
+                              style: TextStyle(
+                                  color: RequisitaEstilo.cinza(30),
+                                  fontFamily: 'Raleway',
+                                  fontSize: 12),
+                            )
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                hino.indicador,
+                                style: TextStyle(
+                                    fontFamily: 'Raleway',
+                                    color: RequisitaEstilo.azul(20)),
+                              ),
+                              Text(
+                                (hino.numero?.toString()) ?? '',
+                                style: TextStyle(
+                                    fontFamily: 'Raleway',
+                                    color: RequisitaEstilo.azul(30),
+                                    fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                            ),
+                            child: Container(
+                                color: RequisitaEstilo.azul(30),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 6),
+                                child: Text(
+                                  hino.coletanea,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
+                                )),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 8),
+                      child: Html(
+                        data: hino.texto,
+                      )),
+                  Divider(
+                    color: RequisitaEstilo.cinza(40),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount: pesquisador.quantidadeHinos,
       ),
     );
   }
@@ -126,132 +244,6 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
           ],
         ),
       ),
-    );
-  }
-
-  Expanded listaDeHinos() {
-    bool taCarregando = false;
-
-    return Expanded(
-        child: taCarregando
-            ? Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                  height: 75.0,
-                  width: 75.0,
-                ),
-              )
-            : resultados());
-  }
-
-  Widget resultados() {
-    return pesquisador?.quantidadeHinos != null
-        ? resultadosPesquisa()
-        : informativo(semResultados);
-  }
-
-  ListView resultadosPesquisa() {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final hino = pesquisador.hinos[index];
-
-        final _numero = hino.numero;
-        final _indicador = _numero == null ? 's/n' : 'nº ';
-        final _nome = hino.nome;
-        final _categoria = hino.categoria;
-        final _coletanea = hino.coletanea;
-        final _texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
-
-        return InkWell(
-          onTap: () {},
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            _nome ?? '',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Raleway',
-                            ),
-                          ),
-                          Text(
-                            _categoria ?? '',
-                            style: TextStyle(
-                                color: RequisitaEstilo.cinza(30),
-                                fontFamily: 'Raleway',
-                                fontSize: 12),
-                          )
-                        ],
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              _indicador,
-                              style: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: RequisitaEstilo.azul(20)),
-                            ),
-                            Text(
-                              (_numero?.toString()) ?? '',
-                              style: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  color: RequisitaEstilo.azul(30),
-                                  fontSize: 20),
-                            ),
-                          ],
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            topLeft: Radius.circular(20),
-                          ),
-                          child: Container(
-                              color: RequisitaEstilo.azul(30),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 3, horizontal: 6),
-                              child: Text(
-                                _coletanea ?? '',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                              )),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 14.0, bottom: 8),
-                    child: Html(
-                      data: _texto,
-                    )),
-                Divider(
-                  color: RequisitaEstilo.cinza(40),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      itemCount: pesquisador.quantidadeHinos,
     );
   }
 }

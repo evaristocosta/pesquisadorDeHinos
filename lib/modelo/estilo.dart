@@ -27,9 +27,9 @@ class EstiloPadrao {
       // fonte padrao
       fontFamily: 'Roboto',
       textTheme: TextTheme(
-        headline: TextStyle(fontFamily: 'Oxanium'),
-        title: TextStyle(fontFamily: 'Oxanium'),
-        subtitle: TextStyle(fontFamily: 'Raleway'),
+        headline5: TextStyle(fontFamily: 'Oxanium'),
+        headline6: TextStyle(fontFamily: 'Oxanium'),
+        subtitle2: TextStyle(fontFamily: 'Raleway'),
         button: TextStyle(fontFamily: 'Raleway'),
       ),
       // outros

@@ -12,7 +12,7 @@ class ControlaPesquisa {
     return hinos.length;
   }
 
-  Future<bool> realizaPesquisa(String chave) async {
+  realizaPesquisa(String chave) async {
     var caminho = await conectaBancoDeDados();
     var pesquisa;
 
@@ -50,13 +50,26 @@ class ControlaPesquisa {
           hinos
         WHERE
           nome LIKE \'%$chave%\' OR 
+          categoria LIKE \'%$chave%\' OR 
+          coletanea LIKE \'%$chave%\' OR 
           texto LIKE \'%$chave%\'
       """;
 
-    List<Map> resultado = await bd.rawQuery(pesquisa);
-    hinos = hinoFromJson(jsonEncode(resultado));
+    try {
+      hinos = hinoFromJson(jsonEncode(await bd.rawQuery(pesquisa)));
+
+      hinos.forEach((hino) {
+        hino.nome = hino.nome ?? '';
+        hino.categoria = hino.categoria ?? '';
+        hino.coletanea = hino.coletanea ?? '';
+        hino.indicador = hino.numero == null ? 's/n' : 'nº ';
+        hino.texto =
+            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
+      });
+    } catch (e) {
+      print(e);
+    }
 
     await bd.close();
-    return true;
   }
 }
