@@ -12,9 +12,9 @@ versão do aplicativo visa, portanto, servir somente como ferramenta de pesquisa
 
 Para esta versão, estão previstas as seguintes funcionalidades:
 
-- Pesquisa pelo número do hino, independente do hinário;
-- Pesquisa por nome real ou conhecido;
-- Pesquisa com parte da letra ou palavras-chave;
+*   Pesquisa pelo número do hino, independente do hinário;
+*   Pesquisa por nome real ou conhecido;
+*   Pesquisa com parte da letra ou palavras-chave;
 
 Caso esteja interessado na documentação do software, favor entrar em contato via email.
 

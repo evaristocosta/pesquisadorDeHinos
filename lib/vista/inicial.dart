@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pesquisadorhinos/controlador.dart';
-import 'package:pesquisadorhinos/visualizador.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/vista/pesquisando.dart';
+import 'package:pesquisadorhinos/vista/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
@@ -10,7 +12,9 @@ class Pesquisador extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-        title: 'Página Principal', home: PesquisadorApp(), theme: estiloPadrao);
+        title: 'Página Principal',
+        home: PesquisadorApp(),
+        theme: RequisitaEstilo.tema());
   }
 }
 
@@ -26,12 +30,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
+      // ignore: missing_return
       onMessage: (Map<String, dynamic> message) {
         print('on message $message');
       },
+      // ignore: missing_return
       onResume: (Map<String, dynamic> message) {
         print('on resume $message');
       },
+      // ignore: missing_return
       onLaunch: (Map<String, dynamic> message) {
         print('on launch $message');
       },
@@ -54,7 +61,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         },
         child: Icon(
           Icons.info_outline,
-          color: RequisitaCor.requisitaAzul(30),
+          color: RequisitaEstilo.azul(30),
         ),
       ),
       body: SafeArea(

@@ -1,26 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/controlador.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-// https://stackoverflow.com/a/55119208/10693073
-class Debouncer {
-  final int milliseconds;
-  VoidCallback action;
-  Timer _timer;
-
-  Debouncer({this.milliseconds});
-
-  run(VoidCallback action) {
-    if (_timer != null) {
-      _timer.cancel();
-    }
-
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
-  }
-}
+import 'package:pesquisadorhinos/controle/debouncer.dart';
+import 'package:pesquisadorhinos/controle/controlaPesquisa.dart';
+import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
@@ -29,10 +13,33 @@ class PesquisandoApp extends StatefulWidget {
 
 class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
-  String textoPesquisa = '';
-  bool pesquisando = false;
+  final debouncer = Debouncer(milliseconds: 400);
 
-  final _debouncer = Debouncer(milliseconds: 800);
+  ControlaPesquisa pesquisador;
+
+  bool taPesquisando = false;
+  bool taCarregando = true;
+  var prePesquisa = {
+    'img': 'assets/imgs/prePesquisa.png',
+    'titulo': 'Comece a pesquisar...',
+    'subtitulo': 'Digite ao menos 3 letras ou 1 dígito numérico'
+  };
+  var semResultados = {
+    'img': 'assets/imgs/semAchar.png',
+    'titulo': 'Nenhum hino encontrado',
+    'subtitulo': '',
+  };
+
+  @override
+  void initState() {
+    pesquisador = new ControlaPesquisa();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +67,23 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {
-                    _debouncer.run(() {
+                    debouncer.run(() async {
                       if (texto.isNotEmpty &&
                           (isInt(texto) || texto.length >= 3)) {
-                        setState(() => pesquisando = true);
-                        textoPesquisa = texto.toUpperCase();
-                        print(textoPesquisa);
+                        setState(() {
+                          taPesquisando = true;
+                          taCarregando = true;
+                        });
+
+                        await pesquisador.realizaPesquisa(texto.toUpperCase());
+
+                        setState(() => taCarregando = false);
                       } else {
-                        setState(() => pesquisando = false);
+                        setState(() => taPesquisando = false);
                       }
                     });
                   },
-                  cursorColor: RequisitaCor.requisitaCinza(40),
+                  cursorColor: RequisitaEstilo.cinza(40),
                   style: TextStyle(fontSize: 18),
                   decoration: InputDecoration(
                       suffixIcon: Icon(Icons.search),
@@ -83,7 +95,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-              pesquisando ? listaDeHinos(textoPesquisa) : prePesquisa(),
+              taPesquisando ? carregandoPesquisa() : informativo(prePesquisa),
             ].where(notNull).toList(),
           ),
         ),
@@ -91,7 +103,121 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
     );
   }
 
-  Expanded prePesquisa() {
+  Widget carregandoPesquisa() {
+    return Container(
+        child: taCarregando
+            ? Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 75.0,
+                  width: 75.0,
+                ),
+              )
+            : pesquisador.quantidadeHinos == 0
+                ? informativo(semResultados)
+                : resultadosPesquisa());
+  }
+
+  Widget resultadosPesquisa() {
+    return Expanded(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          final hino = pesquisador.hinos[index];
+
+          return InkWell(
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              hino.nome,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Raleway',
+                              ),
+                            ),
+                            Text(
+                              hino.categoria,
+                              style: TextStyle(
+                                  color: RequisitaEstilo.cinza(30),
+                                  fontFamily: 'Raleway',
+                                  fontSize: 12),
+                            )
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Text(
+                                hino.indicador,
+                                style: TextStyle(
+                                    fontFamily: 'Raleway',
+                                    color: RequisitaEstilo.azul(20)),
+                              ),
+                              Text(
+                                (hino.numero?.toString()) ?? '',
+                                style: TextStyle(
+                                    fontFamily: 'Raleway',
+                                    color: RequisitaEstilo.azul(30),
+                                    fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                            ),
+                            child: Container(
+                                color: RequisitaEstilo.azul(30),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 6),
+                                child: Text(
+                                  hino.coletanea,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
+                                )),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 8),
+                      child: Html(
+                        data: hino.texto,
+                      )),
+                  Divider(
+                    color: RequisitaEstilo.cinza(40),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount: pesquisador.quantidadeHinos,
+      ),
+    );
+  }
+
+  Widget informativo(Map<String, String> textos) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: 50),
@@ -102,215 +228,22 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 margin: EdgeInsets.only(bottom: 22),
                 width: 180,
                 child: Image(
-                  image: AssetImage('assets/imgs/prePesquisa.png'),
+                  image: AssetImage(textos['img']),
                 )),
             Text(
-              'Comece a pesquisar...',
+              textos['titulo'],
               style: TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 24,
-                  color: RequisitaCor.requisitaCinza(30)),
+                  color: RequisitaEstilo.cinza(30)),
             ),
             SizedBox(
               height: 10,
             ),
-            Text("Digite ao menos 3 letras ou 1 dígito numérico")
+            Text(textos['subtitulo'])
           ],
         ),
       ),
-    );
-  }
-
-  Expanded listaDeHinos(String chave) {
-    return Expanded(
-      child: FutureBuilder(
-        future: pesquisaBD(chave),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return erro(snapshot.error);
-            } else {
-              List<Map> _lista = snapshot.data;
-
-              return _lista.length > 0
-                  ? ListView.builder(
-                      itemBuilder: (context, index) {
-                        final _item = _lista[index];
-
-                        final _numero = _item["numero"] == null ? 's/n' : 'nº ';
-
-                        return InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Flex(
-                                  direction: Axis.horizontal,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            _item["nome"] ?? '',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: 'Raleway',
-                                            ),
-                                          ),
-                                          Text(
-                                            _item['categoria'] ?? '',
-                                            style: TextStyle(
-                                                color:
-                                                    RequisitaCor.requisitaCinza(
-                                                        30),
-                                                fontFamily: 'Raleway',
-                                                fontSize: 12),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: <Widget>[
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            Text(
-                                              _numero,
-                                              style: TextStyle(
-                                                  fontFamily: 'Raleway',
-                                                  color: RequisitaCor
-                                                      .requisitaAzul(20)),
-                                            ),
-                                            Text(
-                                              (_item["numero"]?.toString()) ??
-                                                  '',
-                                              style: TextStyle(
-                                                  fontFamily: 'Raleway',
-                                                  color: RequisitaCor
-                                                      .requisitaAzul(30),
-                                                  fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(20),
-                                            topLeft: Radius.circular(20),
-                                          ),
-                                          child: Container(
-                                              color: RequisitaCor.requisitaAzul(
-                                                  30),
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 3, horizontal: 6),
-                                              child: Text(
-                                                _item['coletanea'] ?? '',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 10),
-                                              )),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 14.0, bottom: 8),
-                                  child: Html(
-                                      data: (_item["texto"] as String)
-                                          .replaceAll("\\n\\n", "\\n")
-                                          .replaceAll("\\n", " ")),
-                                ),
-                                Divider(
-                                  color: RequisitaCor.requisitaCinza(40),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: _lista.length,
-                    )
-                  : semResultados();
-            }
-          } else {
-            return Center(
-              child: SizedBox(
-                child: CircularProgressIndicator(),
-                height: 75.0,
-                width: 75.0,
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  Widget semResultados() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 22),
-              width: 180,
-              child: Image(
-                image: AssetImage('assets/imgs/semAchar.png'),
-              )),
-          Text(
-            'Nenhum hino encontrado',
-            style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 24,
-                color: RequisitaCor.requisitaCinza(30)),
-          ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget erro(String erro) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(bottom: 22),
-            width: 180,
-            child: Image(
-              image: AssetImage('assets/imgs/semAchar.png'),
-            )),
-        Text(
-          'Ops! Algo deu errado...',
-          style: TextStyle(
-              fontFamily: 'Raleway',
-              fontSize: 24,
-              color: RequisitaCor.requisitaCinza(30)),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text("Contate o desenvolvedor para solucionar o problema."),
-        Text('Erro: $erro'),
-      ],
     );
   }
 }

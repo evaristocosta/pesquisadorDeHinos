@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'visualizador.dart';
+
+import 'package:pesquisadorhinos/vista/inicial.dart';
 
 void main() {
   runApp(Pesquisador());
