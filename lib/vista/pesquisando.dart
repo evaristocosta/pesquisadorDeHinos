@@ -20,6 +20,17 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
 
   final _debouncer = Debouncer(milliseconds: 800);
 
+  var prePesquisa = {
+    'img': 'assets/imgs/prePesquisa.png',
+    'titulo': 'Comece a pesquisar...',
+    'subtitulo': 'Digite ao menos 3 letras ou 1 dígito numérico'
+  };
+  var semResultados = {
+    'img': 'assets/imgs/semAchar.png',
+    'titulo': 'Nenhum hino encontrado',
+    'subtitulo': '',
+  };
+
   @override
   void initState() {
     pesquisador = new ControlaPesquisa();
@@ -80,7 +91,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 24)),
                 ),
               ),
-              pesquisando ? listaDeHinos() : prePesquisa(),
+              pesquisando ? listaDeHinos() : informativo(prePesquisa),
             ].where(notNull).toList(),
           ),
         ),
@@ -88,7 +99,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
     );
   }
 
-  Expanded prePesquisa() {
+  Widget informativo(Map<String, String> textos) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: 50),
@@ -99,10 +110,10 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 margin: EdgeInsets.only(bottom: 22),
                 width: 180,
                 child: Image(
-                  image: AssetImage('assets/imgs/prePesquisa.png'),
+                  image: AssetImage(textos['img']),
                 )),
             Text(
-              'Comece a pesquisar...',
+              textos['titulo'],
               style: TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 24,
@@ -111,7 +122,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             SizedBox(
               height: 10,
             ),
-            Text("Digite ao menos 3 letras ou 1 dígito numérico")
+            Text(textos['subtitulo'])
           ],
         ),
       ),
@@ -136,7 +147,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   Widget resultados() {
     return pesquisador?.quantidadeHinos != null
         ? resultadosPesquisa()
-        : semResultados();
+        : informativo(semResultados);
   }
 
   ListView resultadosPesquisa() {
@@ -241,59 +252,6 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
         );
       },
       itemCount: pesquisador.quantidadeHinos,
-    );
-  }
-
-  Widget semResultados() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 22),
-              width: 180,
-              child: Image(
-                image: AssetImage('assets/imgs/semAchar.png'),
-              )),
-          Text(
-            'Nenhum hino encontrado',
-            style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 24,
-                color: RequisitaEstilo.cinza(30)),
-          ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget erro(String erro) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-            margin: EdgeInsets.only(bottom: 22),
-            width: 180,
-            child: Image(
-              image: AssetImage('assets/imgs/semAchar.png'),
-            )),
-        Text(
-          'Ops! Algo deu errado...',
-          style: TextStyle(
-              fontFamily: 'Raleway',
-              fontSize: 24,
-              color: RequisitaEstilo.cinza(30)),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text("Contate o desenvolvedor para solucionar o problema."),
-        Text('Erro: $erro'),
-      ],
     );
   }
 }
