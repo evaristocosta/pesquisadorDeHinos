@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:path/path.dart';
 import 'dart:typed_data';
+import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,7 +14,8 @@ Future<String> conexaoBD() async {
   } catch (_) {}
 
   // Copy from asset
-  ByteData data = await rootBundle.load(join("assets/bd", "pesquisadorHinos.db"));
+  ByteData data =
+      await rootBundle.load(join("assets/bd", "pesquisadorHinos.db"));
   List<int> bytes =
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 

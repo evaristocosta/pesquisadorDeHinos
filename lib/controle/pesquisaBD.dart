@@ -1,9 +1,9 @@
 import 'dart:convert';
-
-import 'package:pesquisadorhinos/modelo/hino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
-import '../controlador.dart';
+
+import 'conexaoBD.dart';
+import 'package:pesquisadorhinos/modelo/hino.dart';
 
 class PesquisaBD {
   List<Hino> hinos;

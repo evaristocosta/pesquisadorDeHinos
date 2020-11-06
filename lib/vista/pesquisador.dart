@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../controlador.dart';
-import '../visualizador.dart';
+import 'package:pesquisadorhinos/controle/requisicaoEstilos.dart';
+import 'package:pesquisadorhinos/vista/pesquisando.dart';
+import 'package:pesquisadorhinos/vista/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
   @override

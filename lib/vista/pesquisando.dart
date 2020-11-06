@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
-import '../controlador.dart';
+
+import 'package:pesquisadorhinos/controle/debouncer.dart';
+import 'package:pesquisadorhinos/controle/pesquisaBD.dart';
+import 'package:pesquisadorhinos/controle/requisicaoEstilos.dart';
 
 class PesquisandoApp extends StatefulWidget {
   @override
