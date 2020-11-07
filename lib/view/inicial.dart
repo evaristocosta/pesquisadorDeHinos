@@ -5,6 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/pesquisando.dart';
+import 'package:pesquisadorhinos/view/selecoes.dart';
 import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
@@ -65,7 +66,8 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         iconData: Icons.list,
         texto: 'Seleções e categorias',
         onPressed: () {
-          print('list');
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Selecoes()));
         }));
 
     return itens;
