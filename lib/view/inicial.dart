@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
-import 'package:pesquisadorhinos/vista/pesquisando.dart';
-import 'package:pesquisadorhinos/vista/sobre.dart';
+import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/view/pesquisando.dart';
+import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
   @override

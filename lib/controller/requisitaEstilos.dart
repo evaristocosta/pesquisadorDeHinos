@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:pesquisadorhinos/modelo/estilo.dart';
+import 'package:pesquisadorhinos/model/estilo.dart';
 
 class RequisitaEstilo {
   static Color cinza(int _cor) {
