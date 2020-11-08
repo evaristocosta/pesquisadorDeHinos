@@ -125,8 +125,12 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
       child: ListView.builder(
         itemBuilder: (context, index) {
           return ItemHino(
-            pesquisador: pesquisador,
-            indice: index,
+            nome: pesquisador.hinos[index].nome,
+            categoria: pesquisador.hinos[index].categoria,
+            indicador: pesquisador.hinos[index].indicador,
+            numero: pesquisador.hinos[index].numero?.toString() ?? '',
+            coletanea: pesquisador.hinos[index].coletanea,
+            texto: pesquisador.hinos[index].texto,
           );
         },
         itemCount: pesquisador.quantidadeHinos,

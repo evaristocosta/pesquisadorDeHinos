@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:pesquisadorhinos/controller/controlaPesquisa.dart';
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 
 class ItemHino extends StatelessWidget {
+  final String nome;
+  final String categoria;
+  final String indicador;
+  final String numero;
+  final String coletanea;
+  final String texto;
+
   const ItemHino({
     Key key,
-    @required this.pesquisador,
-    @required this.indice,
+    @required this.nome,
+    @required this.categoria,
+    @required this.indicador,
+    @required this.numero,
+    @required this.coletanea,
+    @required this.texto,
   }) : super(key: key);
-
-  final ControlaPesquisa pesquisador;
-  final int indice;
 
   @override
   Widget build(BuildContext context) {
-    var hino = pesquisador.hinos[indice];
-
     return InkWell(
       onTap: () {},
       child: Container(
@@ -35,14 +40,14 @@ class ItemHino extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        hino.nome,
+                        nome,
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Raleway',
                         ),
                       ),
                       Text(
-                        hino.categoria,
+                        categoria,
                         style: TextStyle(
                             color: RequisitaEstilo.cinza(30),
                             fontFamily: 'Raleway',
@@ -59,13 +64,13 @@ class ItemHino extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          hino.indicador,
+                          indicador,
                           style: TextStyle(
                               fontFamily: 'Raleway',
                               color: RequisitaEstilo.azul(20)),
                         ),
                         Text(
-                          (hino.numero?.toString()) ?? '',
+                          numero,
                           style: TextStyle(
                               fontFamily: 'Raleway',
                               color: RequisitaEstilo.azul(30),
@@ -83,7 +88,7 @@ class ItemHino extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                           child: Text(
-                            hino.coletanea,
+                            coletanea,
                             style: TextStyle(color: Colors.white, fontSize: 10),
                           )),
                     )
@@ -94,7 +99,7 @@ class ItemHino extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(top: 14.0, bottom: 8),
                 child: Html(
-                  data: hino.texto,
+                  data: texto,
                 )),
             Divider(
               color: RequisitaEstilo.cinza(40),
