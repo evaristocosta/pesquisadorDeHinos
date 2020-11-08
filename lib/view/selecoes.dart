@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pesquisadorhinos/view/components/itemSelecao.dart';
 
 class Selecoes extends StatefulWidget {
   @override
@@ -14,10 +15,23 @@ class _SelecoesState extends State<Selecoes> {
         title: Text('Seleções e categorias',
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
-      body: Container(
-        child: Center(
-          child: Text("nada aqui ainda"),
-        ),
+      body: SafeArea(
+        child: Expanded(
+            child: ListView(
+          children: [
+            ItemSelecao(
+              titulo: 'SELEÇÃO POR TEMA',
+              descricao:
+                  'Louvores organizados pelos temas da coletânea (clamor, dedicação, etc.)',
+            ),
+            ItemSelecao(
+              titulo: 'SELEÇÃO POR TEMA',
+            ),
+            ItemSelecao(
+              titulo: 'SELEÇÃO POR TEMA',
+            ),
+          ],
+        )),
       ),
     );
   }
