@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
 
 import 'conectaBancoDeDados.dart';
-import 'package:pesquisadorhinos/model/hino.dart';
+import 'package:pesquisadorhinos/model/Hino.dart';
 
 class ControlaPesquisa {
   List<Hino> hinos;

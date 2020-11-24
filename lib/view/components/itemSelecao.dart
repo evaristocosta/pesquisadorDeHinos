@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/view/resultados.dart';
+import 'package:pesquisadorhinos/view/subselecoes.dart';
 
 class ItemSelecao extends StatelessWidget {
+  final int tipo;
+  final String id;
   final String titulo;
   final String descricao;
 
   const ItemSelecao({
     Key key,
+    @required this.tipo,
+    this.id,
     @required this.titulo,
     this.descricao,
   }) : super(key: key);
@@ -48,7 +54,13 @@ class ItemSelecao extends StatelessWidget {
             border: Border.all(color: RequisitaEstilo.cinza(20)),
             borderRadius: BorderRadius.circular(16)),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        tipo == 0 ? Subselecoes(id, titulo) : Resultados()));
+          },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),

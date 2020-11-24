@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pesquisadorhinos/controller/controlaSelecoes.dart';
-import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/components/itemSelecao.dart';
 
-class Selecoes extends StatefulWidget {
+class Subselecoes extends StatefulWidget {
+  final String id;
+  final String titulo;
+  const Subselecoes(this.id, this.titulo);
+
   @override
-  _SelecoesState createState() => _SelecoesState();
+  _SubselecoesState createState() => _SubselecoesState();
 }
 
-class _SelecoesState extends State<Selecoes> {
+class _SubselecoesState extends State<Subselecoes> {
   ControlaSelecoes itens;
 
   @override
   void initState() {
     itens = new ControlaSelecoes();
-    itens.listaSelecoes();
+    itens.lidaComSelecao(widget.id);
     super.initState();
   }
 
@@ -28,7 +31,9 @@ class _SelecoesState extends State<Selecoes> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        title: Text('Seleções e categorias',
+        // https://stackoverflow.com/a/60528001
+        title: Text(
+            "${widget.titulo[0].toUpperCase()}${widget.titulo.substring(1)}",
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
@@ -37,9 +42,7 @@ class _SelecoesState extends State<Selecoes> {
           itemBuilder: (context, index) {
             return ItemSelecao(
                 tipo: itens.selecoes[index].tipo,
-                id: itens.selecoes[index].id,
-                titulo: itens.selecoes[index].nome,
-                descricao: itens.selecoes[index].descricao);
+                titulo: itens.selecoes[index].nome);
           },
           itemCount: itens.quantidadeSelecoes,
         )),

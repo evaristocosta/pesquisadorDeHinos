@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/model/hino.dart';
+import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/view/components/itemHino.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_html/flutter_html.dart';
