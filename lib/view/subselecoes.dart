@@ -41,8 +41,9 @@ class _SubselecoesState extends State<Subselecoes> {
             child: ListView.builder(
           itemBuilder: (context, index) {
             return ItemSelecao(
-                tipo: itens.selecoes[index].tipo,
-                titulo: itens.selecoes[index].nome);
+              tipo: itens.selecoes[index].tipo,
+              titulo: itens.selecoes[index].nome,
+            );
           },
           itemCount: itens.quantidadeSelecoes,
         )),

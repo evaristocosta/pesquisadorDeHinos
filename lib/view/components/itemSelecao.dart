@@ -58,8 +58,9 @@ class ItemSelecao extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        tipo == 0 ? Subselecoes(id, titulo) : Resultados()));
+                    builder: (context) => tipo == 0
+                        ? Subselecoes(id, titulo)
+                        : Resultados(titulo)));
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
