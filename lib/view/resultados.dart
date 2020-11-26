@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/controller/controlaSelecoes.dart';
+import 'package:pesquisadorhinos/controller/controlaResultadosSelecoes.dart';
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/components/itemHino.dart';
 
+import 'components/carregando.dart';
+
 class Resultados extends StatefulWidget {
+  final String id;
   final String letra;
-  const Resultados(this.letra);
+  const Resultados(this.id, this.letra);
 
   @override
   _ResultadosState createState() => _ResultadosState();
 }
 
 class _ResultadosState extends State<Resultados> {
-  ControlaSelecoes itens;
+  ControlaResultadosSelecoes itens;
   bool _taCompleto = false;
 
   @override
   void initState() {
-    itens = new ControlaSelecoes();
+    itens = new ControlaResultadosSelecoes();
     itens.buscaAlfabeto(widget.letra).whenComplete(() {
       setState(() => _taCompleto = true);
     });
@@ -62,14 +65,7 @@ class _ResultadosState extends State<Resultados> {
                             fontSize: 24,
                             color: RequisitaEstilo.cinza(30)),
                       ))
-                : Container(
-                    child: Center(
-                    child: SizedBox(
-                      child: CircularProgressIndicator(),
-                      height: 75.0,
-                      width: 75.0,
-                    ),
-                  ))),
+                : Carregando()),
       ),
     );
   }

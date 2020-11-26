@@ -60,7 +60,7 @@ class ItemSelecao extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => tipo == 0
                         ? Subselecoes(id, titulo)
-                        : Resultados(titulo)));
+                        : Resultados(id, titulo)));
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(

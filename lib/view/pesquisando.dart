@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pesquisadorhinos/model/Hino.dart';
-import 'package:pesquisadorhinos/view/components/itemHino.dart';
 import 'package:validators/validators.dart';
-import 'package:flutter_html/flutter_html.dart';
 
+import 'package:pesquisadorhinos/view/components/carregando.dart';
+import 'package:pesquisadorhinos/view/components/itemHino.dart';
 import 'package:pesquisadorhinos/controller/debouncer.dart';
 import 'package:pesquisadorhinos/controller/controlaPesquisa.dart';
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
@@ -108,13 +107,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   Widget carregandoPesquisa() {
     return Container(
         child: taCarregando
-            ? Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                  height: 75.0,
-                  width: 75.0,
-                ),
-              )
+            ? Carregando()
             : pesquisador.quantidadeHinos == 0
                 ? informativo(semResultados)
                 : resultadosPesquisa());
