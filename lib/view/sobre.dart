@@ -60,13 +60,11 @@ class _SobreState extends State<Sobre> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  /* SizedBox(height: 40,), */
-
                   Center(
                     child: Container(
                         width: 180,
                         child: Image(
-                          image: AssetImage('assets/imgs/logo.png'),
+                          image: AssetImage('assets/images/logo.png'),
                         )),
                   ),
                   Center(
@@ -74,7 +72,7 @@ class _SobreState extends State<Sobre> {
                         margin: EdgeInsets.symmetric(vertical: 20),
                         width: 160,
                         child: Image(
-                          image: AssetImage('assets/imgs/marca.png'),
+                          image: AssetImage('assets/images/marca.png'),
                         )),
                   ),
                   Center(
@@ -94,7 +92,6 @@ class _SobreState extends State<Sobre> {
                               fontSize: 24,
                               fontFamily: 'Raleway',
                             )),
-                        
                         Html(data: """
                         <p>
                           O aplicativo Pesquisador de Hinos ou "Qual é o hino?" vêm como proposta para a
@@ -120,20 +117,24 @@ class _SobreState extends State<Sobre> {
                             fontFamily: 'Raleway',
                           ),
                         ),
-
                         FlatButton(
                             padding: EdgeInsets.all(0),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                             onPressed: _acessarPagina,
-                            child: Text('Página do app', style: TextStyle(fontWeight: FontWeight.bold),)),
-                        
+                            child: Text(
+                              'Página do app',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
                         FlatButton(
                             padding: EdgeInsets.all(0),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                             onPressed: _acessarRepositorio,
-                            child: Text('Repositório do código-fonte', style: TextStyle(fontWeight: FontWeight.bold),))
+                            child: Text(
+                              'Repositório do código-fonte',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ))
                       ],
                     ),
                   ),
@@ -155,7 +156,6 @@ class _SobreState extends State<Sobre> {
                           <li>Those Icons</li>
                         </ul>
                         """)
-                        
                       ],
                     ),
                   )

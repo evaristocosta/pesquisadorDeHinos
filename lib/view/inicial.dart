@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-import 'package:pesquisadorhinos/controle/requisitaEstilos.dart';
-import 'package:pesquisadorhinos/vista/pesquisando.dart';
-import 'package:pesquisadorhinos/vista/sobre.dart';
+import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/view/pesquisando.dart';
+import 'package:pesquisadorhinos/view/selecoes.dart';
+import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
   @override
@@ -50,19 +52,56 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+  List<SpeedDialChild> _pegaMenu() {
+    List<SpeedDialChild> itens = [];
+
+    itens.add(_padraoBotaoDeMenu(
+        iconData: Icons.info_outline,
+        texto: 'Informações',
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Sobre()));
-        },
+        }));
+    itens.add(_padraoBotaoDeMenu(
+        iconData: Icons.list,
+        texto: 'Seleções e categorias',
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Selecoes()));
+        }));
+
+    return itens;
+  }
+
+  SpeedDialChild _padraoBotaoDeMenu(
+      {IconData iconData, Function onPressed, String texto}) {
+    return SpeedDialChild(
+        backgroundColor: Colors.white,
         child: Icon(
-          Icons.info_outline,
+          iconData,
           color: RequisitaEstilo.azul(30),
         ),
+        onTap: onPressed,
+        labelWidget: Text(
+          texto,
+          style: TextStyle(
+            color: RequisitaEstilo.azul(30),
+            fontSize: 18,
+            fontFamily: 'Raleway',
+          ),
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        children: _pegaMenu(),
+        overlayColor: Colors.white,
+        overlayOpacity: 0.8,
+        backgroundColor: Colors.white,
+        foregroundColor: RequisitaEstilo.azul(30),
       ),
       body: SafeArea(
         child: Container(
@@ -76,7 +115,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                   child: Container(
                       width: 180,
                       child: Image(
-                        image: AssetImage('assets/imgs/logo.png'),
+                        image: AssetImage('assets/images/logo.png'),
                       )),
                 ),
                 Center(
@@ -84,7 +123,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                       margin: EdgeInsets.symmetric(vertical: 20),
                       width: 160,
                       child: Image(
-                        image: AssetImage('assets/imgs/marca.png'),
+                        image: AssetImage('assets/images/marca.png'),
                       )),
                 ),
                 SizedBox(
