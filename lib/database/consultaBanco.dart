@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
-import 'conectaBancoDeDados.dart';
+
+import 'package:pesquisadorhinos/database/conectaBancoDeDados.dart';
 
 class ConsultaBanco {
   pesquisa(String pesquisa) async {

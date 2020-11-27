@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:pesquisadorhinos/controller/controlaResultadosSelecoes.dart';
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/view/components/carregando.dart';
 import 'package:pesquisadorhinos/view/components/itemHino.dart';
-
-import 'components/carregando.dart';
 
 class Resultados extends StatefulWidget {
   final String id;

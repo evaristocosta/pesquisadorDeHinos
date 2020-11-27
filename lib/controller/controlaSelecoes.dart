@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:pesquisadorhinos/controller/consultaBanco.dart';
+import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
 class ControlaSelecoes {
