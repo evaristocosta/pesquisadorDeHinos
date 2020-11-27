@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
@@ -19,10 +20,10 @@ class ControlaSelecoes {
           'Categorizados por sequência alfabética, independente da coletânea'),
       SelecoesDisponiveis(0, 'coletanea', 'coletâneas',
           'Todos os hinos de uma das coletâneas disponíveis: comum, de crianças ou avulsa'),
-      /* SelecoesDisponiveis(1, 'culto', 'cultos especiais',
+      SelecoesDisponiveis(0, 'especiais', 'cultos especiais',
           'Hinos para cantar em cultos de ceia, casamento ou sepultamento'),
-      SelecoesDisponiveis(1, 'sugestao', 'sugestões',
-          'Listas de sugestões para adolescentes, jovens e senhoras') */
+      SelecoesDisponiveis(0, 'sugestoes', 'sugestões',
+          'Listas de sugestões para adolescentes, jovens e senhoras')
     ];
     return selecoes;
   }
@@ -61,6 +62,30 @@ class ControlaSelecoes {
                 1, 'coletanea', coletanea['coletanea'], '');
         }).toList();
         selecoes.removeWhere((elemento) => elemento == null);
+
+        return selecoes;
+        break;
+
+      case 'especiais':
+        Map especiais = json.decode(
+            await rootBundle.loadString('assets/database/especiais.json'));
+        List listaEspeciais = especiais.keys.toList();
+        selecoes = listaEspeciais
+            .map(
+                (especial) => SelecoesDisponiveis(1, 'especiais', especial, ''))
+            .toList();
+
+        return selecoes;
+        break;
+
+      case 'sugestoes':
+        Map sugestoes = json.decode(
+            await rootBundle.loadString('assets/database/sugestoes.json'));
+        List listaSugestoes = sugestoes.keys.toList();
+        selecoes = listaSugestoes
+            .map(
+                (sugestao) => SelecoesDisponiveis(1, 'sugestoes', sugestao, ''))
+            .toList();
 
         return selecoes;
         break;
