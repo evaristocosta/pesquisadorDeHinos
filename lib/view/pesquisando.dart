@@ -21,12 +21,12 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   bool taPesquisando = false;
   bool taCarregando = true;
   var prePesquisa = {
-    'img': 'assets/imgs/prePesquisa.png',
+    'img': 'assets/images/prePesquisa.png',
     'titulo': 'Comece a pesquisar...',
     'subtitulo': 'Digite ao menos 3 letras ou 1 dígito numérico'
   };
   var semResultados = {
-    'img': 'assets/imgs/semAchar.png',
+    'img': 'assets/images/semAchar.png',
     'titulo': 'Nenhum hino encontrado',
     'subtitulo': '',
   };
@@ -59,7 +59,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                     margin: EdgeInsets.only(top: 26),
                     width: 160,
                     child: Image(
-                      image: AssetImage('assets/imgs/marca.png'),
+                      image: AssetImage('assets/images/marca.png'),
                     )),
               ),
               Container(

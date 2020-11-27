@@ -15,7 +15,7 @@ Future<String> conectaBancoDeDados() async {
 
   // Copy from asset
   ByteData data =
-      await rootBundle.load(join("assets/bd", "pesquisadorHinos.db"));
+      await rootBundle.load(join("assets/database", "pesquisadorHinos.db"));
   List<int> bytes =
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 

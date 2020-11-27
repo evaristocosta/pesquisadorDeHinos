@@ -115,7 +115,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                   child: Container(
                       width: 180,
                       child: Image(
-                        image: AssetImage('assets/imgs/logo.png'),
+                        image: AssetImage('assets/images/logo.png'),
                       )),
                 ),
                 Center(
@@ -123,7 +123,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                       margin: EdgeInsets.symmetric(vertical: 20),
                       width: 160,
                       child: Image(
-                        image: AssetImage('assets/imgs/marca.png'),
+                        image: AssetImage('assets/images/marca.png'),
                       )),
                 ),
                 SizedBox(
