@@ -19,10 +19,10 @@ class ControlaSelecoes {
           'Categorizados por sequência alfabética, independente da coletânea'),
       SelecoesDisponiveis(0, 'coletanea', 'coletâneas',
           'Todos os hinos de uma das coletâneas disponíveis: comum, de crianças ou avulsa'),
-      SelecoesDisponiveis(1, 'culto', 'cultos especiais',
+      /* SelecoesDisponiveis(1, 'culto', 'cultos especiais',
           'Hinos para cantar em cultos de ceia, casamento ou sepultamento'),
       SelecoesDisponiveis(1, 'sugestao', 'sugestões',
-          'Listas de sugestões para adolescentes, jovens e senhoras')
+          'Listas de sugestões para adolescentes, jovens e senhoras') */
     ];
     return selecoes;
   }
