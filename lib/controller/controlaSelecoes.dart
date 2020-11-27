@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:pesquisadorhinos/controller/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
 class ControlaSelecoes {
   List<SelecoesDisponiveis> selecoes;
+  ConsultaBanco consultaBanco;
 
   int get quantidadeSelecoes {
     return selecoes?.length ?? 0;
@@ -24,8 +28,20 @@ class ControlaSelecoes {
   }
 
   lidaComSelecao(String id) async {
+    consultaBanco = new ConsultaBanco();
+
     switch (id) {
       case 'tema':
+        var pesquisa = "SELECT DISTINCT categoria FROM hinos";
+        List resposta = json.decode(await consultaBanco.pesquisa(pesquisa));
+
+        selecoes = resposta.map((categoria) {
+          if (categoria['categoria'] != null)
+            return SelecoesDisponiveis(1, '', categoria['categoria'], '');
+        }).toList();
+        selecoes.removeWhere((elemento) => elemento == null);
+
+        return selecoes;
         break;
 
       case 'alfabeto':
@@ -36,6 +52,16 @@ class ControlaSelecoes {
         break;
 
       case 'coletanea':
+        var pesquisa = "SELECT DISTINCT coletanea FROM hinos";
+        List resposta = json.decode(await consultaBanco.pesquisa(pesquisa));
+
+        selecoes = resposta.map((coletanea) {
+          if (coletanea['coletanea'] != null)
+            return SelecoesDisponiveis(1, '', coletanea['coletanea'], '');
+        }).toList();
+        selecoes.removeWhere((elemento) => elemento == null);
+
+        return selecoes;
         break;
 
       default:

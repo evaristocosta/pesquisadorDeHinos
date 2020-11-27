@@ -39,7 +39,7 @@ class _SubselecoesState extends State<Subselecoes> {
         iconTheme: IconThemeData(color: Colors.white),
         // https://stackoverflow.com/a/60528001
         title: Text(
-            "${widget.titulo[0].toUpperCase()}${widget.titulo.substring(1)}",
+            "${widget.titulo[0].toUpperCase()}${widget.titulo.substring(1).toLowerCase()}",
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
