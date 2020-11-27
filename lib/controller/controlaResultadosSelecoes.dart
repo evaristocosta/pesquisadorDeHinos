@@ -1,20 +1,19 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
-import 'package:pesquisadorhinos/database/consultaBanco.dart';
+
 import 'package:pesquisadorhinos/model/Hino.dart';
+import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaResultadosSelecoes {
   List<Hino> hinos;
-  ConsultaBanco consultaBanco;
+  ProcessaHinos processaHinos;
 
   int get quantidadeHinos {
     return hinos?.length ?? 0;
   }
 
-  buscaTemaLetraOuColetanea(String id, String busca) async {
-    consultaBanco = new ConsultaBanco();
-
+  busca(String id, String busca) async {
+    processaHinos = new ProcessaHinos();
     String coluna, pesquisa, escolhidos = "(";
 
     switch (id) {
@@ -84,20 +83,6 @@ class ControlaResultadosSelecoes {
       """;
     }
 
-    try {
-      var resposta = await consultaBanco.pesquisa(pesquisa);
-      hinos = hinoFromJson(resposta);
-
-      hinos.forEach((hino) {
-        hino.nome = hino.nome ?? '';
-        hino.categoria = hino.categoria ?? '';
-        hino.coletanea = hino.coletanea ?? '';
-        hino.indicador = hino.numero == null ? 's/n' : 'nº ';
-        hino.texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
-      });
-    } catch (e) {
-      print(e);
-    }
+    hinos = await processaHinos.preencher(pesquisa);
   }
 }

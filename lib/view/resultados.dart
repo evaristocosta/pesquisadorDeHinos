@@ -21,7 +21,7 @@ class _ResultadosState extends State<Resultados> {
   @override
   void initState() {
     itens = new ControlaResultadosSelecoes();
-    itens.buscaTemaLetraOuColetanea(widget.id, widget.nome).whenComplete(() {
+    itens.busca(widget.id, widget.nome).whenComplete(() {
       setState(() => _taCompleto = true);
     });
     super.initState();

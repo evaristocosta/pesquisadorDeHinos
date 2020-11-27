@@ -29,6 +29,15 @@ class _SobreState extends State<Sobre> {
     });
   }
 
+  _acessarPlayStore() async {
+    const url =
+        'https://play.google.com/store/apps/details?id=com.trabalhosgerais.pesquisadorhinos';
+    if (await canLaunch(url))
+      await launch(url);
+    else
+      throw 'Não foi possível acessar a loja';
+  }
+
   _acessarPagina() async {
     const url = 'https://evaristocosta.github.io/pesquisadorDeHinos/';
     if (await canLaunch(url))
@@ -121,9 +130,18 @@ class _SobreState extends State<Sobre> {
                             padding: EdgeInsets.all(0),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
+                            onPressed: _acessarPlayStore,
+                            child: Text(
+                              'Avalie na Play Store',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                        FlatButton(
+                            padding: EdgeInsets.all(0),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
                             onPressed: _acessarPagina,
                             child: Text(
-                              'Página do app',
+                              'Página explicativa',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
                         FlatButton(
