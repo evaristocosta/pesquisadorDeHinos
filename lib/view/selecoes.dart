@@ -37,7 +37,7 @@ class _SelecoesState extends State<Selecoes> {
             return ItemSelecao(
                 tipo: itens.selecoes[index].tipo,
                 id: itens.selecoes[index].id,
-                titulo: itens.selecoes[index].nome,
+                nome: itens.selecoes[index].nome,
                 descricao: itens.selecoes[index].descricao);
           },
           itemCount: itens.quantidadeSelecoes,

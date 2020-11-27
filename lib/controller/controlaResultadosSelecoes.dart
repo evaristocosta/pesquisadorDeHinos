@@ -9,42 +9,23 @@ class ControlaResultadosSelecoes {
     return hinos?.length ?? 0;
   }
 
-  buscaTema(String tema) async {
+  buscaTemaLetraOuColetanea(String id, String busca) async {
     consultaBanco = new ConsultaBanco();
+    var coluna;
 
-    var pesquisa = """
-        SELECT 
-          idhinos,
-          numero,
-          nome,
-          SUBSTR(texto, 1, 70) || '...' texto,
-          categoria,
-          coletanea
-        FROM 
-          hinos
-        WHERE
-          categoria LIKE \'$tema\' 
-      """;
+    switch (id) {
+      case 'tema':
+        coluna = 'categoria';
+        break;
 
-    try {
-      var resposta = await consultaBanco.pesquisa(pesquisa);
-      hinos = hinoFromJson(resposta);
+      case 'alfabeto':
+        coluna = 'texto';
+        break;
 
-      hinos.forEach((hino) {
-        hino.nome = hino.nome ?? '';
-        hino.categoria = hino.categoria ?? '';
-        hino.coletanea = hino.coletanea ?? '';
-        hino.indicador = hino.numero == null ? 's/n' : 'nº ';
-        hino.texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
-      });
-    } catch (e) {
-      print(e);
+      case 'coletanea':
+        coluna = 'coletanea';
+        break;
     }
-  }
-
-  buscaAlfabeto(String letra) async {
-    consultaBanco = new ConsultaBanco();
 
     var pesquisa = """
         SELECT 
@@ -57,41 +38,7 @@ class ControlaResultadosSelecoes {
         FROM 
           hinos
         WHERE
-          texto LIKE \'$letra%\' 
-      """;
-
-    try {
-      var resposta = await consultaBanco.pesquisa(pesquisa);
-      hinos = hinoFromJson(resposta);
-
-      hinos.forEach((hino) {
-        hino.nome = hino.nome ?? '';
-        hino.categoria = hino.categoria ?? '';
-        hino.coletanea = hino.coletanea ?? '';
-        hino.indicador = hino.numero == null ? 's/n' : 'nº ';
-        hino.texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  buscaColetanea(String coletanea) async {
-    consultaBanco = new ConsultaBanco();
-
-    var pesquisa = """
-        SELECT 
-          idhinos,
-          numero,
-          nome,
-          SUBSTR(texto, 1, 70) || '...' texto,
-          categoria,
-          coletanea
-        FROM 
-          hinos
-        WHERE
-          coletanea LIKE \'$coletanea\' 
+          $coluna LIKE \'$busca%\' 
       """;
 
     try {

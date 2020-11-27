@@ -7,8 +7,8 @@ import 'components/carregando.dart';
 
 class Resultados extends StatefulWidget {
   final String id;
-  final String letra;
-  const Resultados(this.id, this.letra);
+  final String nome;
+  const Resultados(this.id, this.nome);
 
   @override
   _ResultadosState createState() => _ResultadosState();
@@ -21,7 +21,7 @@ class _ResultadosState extends State<Resultados> {
   @override
   void initState() {
     itens = new ControlaResultadosSelecoes();
-    itens.buscaAlfabeto(widget.letra).whenComplete(() {
+    itens.buscaTemaLetraOuColetanea(widget.id, widget.nome).whenComplete(() {
       setState(() => _taCompleto = true);
     });
     super.initState();

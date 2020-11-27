@@ -7,8 +7,8 @@ import 'package:pesquisadorhinos/view/components/itemSelecao.dart';
 
 class Subselecoes extends StatefulWidget {
   final String id;
-  final String titulo;
-  const Subselecoes(this.id, this.titulo);
+  final String nome;
+  const Subselecoes(this.id, this.nome);
 
   @override
   _SubselecoesState createState() => _SubselecoesState();
@@ -39,7 +39,7 @@ class _SubselecoesState extends State<Subselecoes> {
         iconTheme: IconThemeData(color: Colors.white),
         // https://stackoverflow.com/a/60528001
         title: Text(
-            "${widget.titulo[0].toUpperCase()}${widget.titulo.substring(1).toLowerCase()}",
+            "${widget.nome[0].toUpperCase()}${widget.nome.substring(1).toLowerCase()}",
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
@@ -49,8 +49,9 @@ class _SubselecoesState extends State<Subselecoes> {
                     ? ListView.builder(
                         itemBuilder: (context, index) {
                           return ItemSelecao(
+                            id: itens.selecoes[index].id,
                             tipo: itens.selecoes[index].tipo,
-                            titulo: itens.selecoes[index].nome,
+                            nome: itens.selecoes[index].nome,
                           );
                         },
                         itemCount: itens.quantidadeSelecoes,

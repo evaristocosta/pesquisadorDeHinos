@@ -6,21 +6,21 @@ import 'package:pesquisadorhinos/view/subselecoes.dart';
 class ItemSelecao extends StatelessWidget {
   final int tipo;
   final String id;
-  final String titulo;
+  final String nome;
   final String descricao;
 
   const ItemSelecao({
     Key key,
     @required this.tipo,
     this.id,
-    @required this.titulo,
+    @required this.nome,
     this.descricao,
   }) : super(key: key);
 
   List<Widget> _temDescricao() {
     List<Widget> conteudo = [
       Text(
-        titulo,
+        nome,
         style: TextStyle(fontFamily: 'Raleway', fontSize: 22),
       )
     ];
@@ -59,8 +59,8 @@ class ItemSelecao extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => tipo == 0
-                        ? Subselecoes(id, titulo)
-                        : Resultados(id, titulo)));
+                        ? Subselecoes(id, nome)
+                        : Resultados(id, nome)));
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(

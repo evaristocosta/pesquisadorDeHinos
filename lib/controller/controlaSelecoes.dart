@@ -37,7 +37,7 @@ class ControlaSelecoes {
 
         selecoes = resposta.map((categoria) {
           if (categoria['categoria'] != null)
-            return SelecoesDisponiveis(1, '', categoria['categoria'], '');
+            return SelecoesDisponiveis(1, 'tema', categoria['categoria'], '');
         }).toList();
         selecoes.removeWhere((elemento) => elemento == null);
 
@@ -46,7 +46,7 @@ class ControlaSelecoes {
 
       case 'alfabeto':
         selecoes = alfabeto
-            .map((letra) => SelecoesDisponiveis(1, '', letra, ''))
+            .map((letra) => SelecoesDisponiveis(1, 'alfabeto', letra, ''))
             .toList();
         return selecoes;
         break;
@@ -57,7 +57,8 @@ class ControlaSelecoes {
 
         selecoes = resposta.map((coletanea) {
           if (coletanea['coletanea'] != null)
-            return SelecoesDisponiveis(1, '', coletanea['coletanea'], '');
+            return SelecoesDisponiveis(
+                1, 'coletanea', coletanea['coletanea'], '');
         }).toList();
         selecoes.removeWhere((elemento) => elemento == null);
 
