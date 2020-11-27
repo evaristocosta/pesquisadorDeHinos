@@ -13,7 +13,7 @@ class ItemSelecao extends StatelessWidget {
   const ItemSelecao({
     Key key,
     @required this.tipo,
-    this.id,
+    @required this.id,
     @required this.nome,
     this.descricao,
   }) : super(key: key);

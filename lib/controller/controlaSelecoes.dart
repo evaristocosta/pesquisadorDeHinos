@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
+
 import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
@@ -46,9 +46,13 @@ class ControlaSelecoes {
         break;
 
       case 'alfabeto':
-        selecoes = alfabeto
+        Map alfabeto = json.decode(
+            await rootBundle.loadString('assets/database/alfabeto.json'));
+        List listaLetras = alfabeto['alfabeto'].toList();
+        selecoes = listaLetras
             .map((letra) => SelecoesDisponiveis(1, 'alfabeto', letra, ''))
             .toList();
+
         return selecoes;
         break;
 
@@ -94,32 +98,3 @@ class ControlaSelecoes {
     }
   }
 }
-
-List alfabeto = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z'
-];

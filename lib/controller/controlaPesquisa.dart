@@ -1,23 +1,19 @@
-import 'dart:convert';
-import 'package:sqflite/sqflite.dart';
 import 'package:validators/validators.dart';
 
-import 'package:pesquisadorhinos/database/conectaBancoDeDados.dart';
 import 'package:pesquisadorhinos/model/Hino.dart';
+import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaPesquisa {
   List<Hino> hinos;
+  ProcessaHinos processaHinos;
 
   int get quantidadeHinos {
     return hinos.length;
   }
 
-  realizaPesquisa(String chave) async {
-    var caminho = await conectaBancoDeDados();
+  busca(String chave) async {
+    processaHinos = new ProcessaHinos();
     var pesquisa;
-
-    // open the database
-    Database bd = await openDatabase(caminho, readOnly: true);
 
     isInt(chave)
         ? pesquisa = """
@@ -55,21 +51,6 @@ class ControlaPesquisa {
           texto LIKE \'%$chave%\'
       """;
 
-    try {
-      hinos = hinoFromJson(jsonEncode(await bd.rawQuery(pesquisa)));
-
-      hinos.forEach((hino) {
-        hino.nome = hino.nome ?? '';
-        hino.categoria = hino.categoria ?? '';
-        hino.coletanea = hino.coletanea ?? '';
-        hino.indicador = hino.numero == null ? 's/n' : 'nº ';
-        hino.texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
-      });
-    } catch (e) {
-      print(e);
-    }
-
-    await bd.close();
+    hinos = await processaHinos.preencher(pesquisa);
   }
 }

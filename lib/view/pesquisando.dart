@@ -76,7 +76,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                           taCarregando = true;
                         });
 
-                        await pesquisador.realizaPesquisa(texto.toUpperCase());
+                        await pesquisador.busca(texto.toUpperCase());
 
                         setState(() => taCarregando = false);
                       } else {
