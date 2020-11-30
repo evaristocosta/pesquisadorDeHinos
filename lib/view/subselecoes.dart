@@ -43,28 +43,27 @@ class _SubselecoesState extends State<Subselecoes> {
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
-        child: Expanded(
-            child: _taCompleto
-                ? itens.quantidadeSelecoes != 0
-                    ? ListView.builder(
-                        itemBuilder: (context, index) {
-                          return ItemSelecao(
-                            id: itens.selecoes[index].id,
-                            tipo: itens.selecoes[index].tipo,
-                            nome: itens.selecoes[index].nome,
-                          );
-                        },
-                        itemCount: itens.quantidadeSelecoes,
-                      )
-                    : Center(
-                        child: Text(
-                        'Nenhum item encontrado',
-                        style: TextStyle(
-                            fontFamily: 'Raleway',
-                            fontSize: 24,
-                            color: RequisitaEstilo.cinza(30)),
-                      ))
-                : Carregando()),
+        child: _taCompleto
+            ? itens.quantidadeSelecoes != 0
+                ? ListView.builder(
+                    itemBuilder: (context, index) {
+                      return ItemSelecao(
+                        id: itens.selecoes[index].id,
+                        tipo: itens.selecoes[index].tipo,
+                        nome: itens.selecoes[index].nome,
+                      );
+                    },
+                    itemCount: itens.quantidadeSelecoes,
+                  )
+                : Center(
+                    child: Text(
+                    'Nenhum item encontrado',
+                    style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 24,
+                        color: RequisitaEstilo.cinza(30)),
+                  ))
+            : Carregando(),
       ),
     );
   }
