@@ -37,35 +37,34 @@ class _ResultadosState extends State<Resultados> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        title: Text('Resultados',
+        title: Text(
+            "${widget.nome[0].toUpperCase()}${widget.nome.substring(1).toLowerCase()}",
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
-        child: Expanded(
-            child: _taCompleto
-                ? itens.quantidadeHinos != 0
-                    ? ListView.builder(
-                        itemBuilder: (context, index) {
-                          return ItemHino(
-                              nome: itens.hinos[index].nome,
-                              categoria: itens.hinos[index].categoria,
-                              indicador: itens.hinos[index].indicador,
-                              numero:
-                                  itens.hinos[index].numero?.toString() ?? '',
-                              coletanea: itens.hinos[index].coletanea,
-                              texto: itens.hinos[index].texto);
-                        },
-                        itemCount: itens.quantidadeHinos,
-                      )
-                    : Center(
-                        child: Text(
-                        'Nenhum item encontrado',
-                        style: TextStyle(
-                            fontFamily: 'Raleway',
-                            fontSize: 24,
-                            color: RequisitaEstilo.cinza(30)),
-                      ))
-                : Carregando()),
+        child: _taCompleto
+            ? itens.quantidadeHinos != 0
+                ? ListView.builder(
+                    itemBuilder: (context, index) {
+                      return ItemHino(
+                          nome: itens.hinos[index].nome,
+                          categoria: itens.hinos[index].categoria,
+                          indicador: itens.hinos[index].indicador,
+                          numero: itens.hinos[index].numero?.toString() ?? '',
+                          coletanea: itens.hinos[index].coletanea,
+                          texto: itens.hinos[index].texto);
+                    },
+                    itemCount: itens.quantidadeHinos,
+                  )
+                : Center(
+                    child: Text(
+                    'Nenhum item encontrado',
+                    style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 24,
+                        color: RequisitaEstilo.cinza(30)),
+                  ))
+            : Carregando(),
       ),
     );
   }

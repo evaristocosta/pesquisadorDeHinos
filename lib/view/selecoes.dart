@@ -32,8 +32,7 @@ class _SelecoesState extends State<Selecoes> {
             style: TextStyle(color: Colors.white, fontFamily: 'Raleway')),
       ),
       body: SafeArea(
-        child: Expanded(
-            child: ListView.builder(
+        child: ListView.builder(
           itemBuilder: (context, index) {
             return ItemSelecao(
                 tipo: itens.selecoes[index].tipo,
@@ -42,7 +41,7 @@ class _SelecoesState extends State<Selecoes> {
                 descricao: itens.selecoes[index].descricao);
           },
           itemCount: itens.quantidadeSelecoes,
-        )),
+        ),
       ),
     );
   }
