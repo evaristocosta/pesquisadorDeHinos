@@ -1,0 +1,3 @@
+# Correção de bugs de compatibilidade e exibição
+
+Adição de opção de debug symbols e remoção de widgets de exibição que não funcionavam na versão de release (`Expanded`).

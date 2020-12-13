@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
+import 'package:pesquisadorhinos/view/exibicaoLetra.dart';
 
 class ItemHino extends StatelessWidget {
   final String nome;
@@ -24,7 +25,10 @@ class ItemHino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ExibicaoLetra()));
+      },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Column(
