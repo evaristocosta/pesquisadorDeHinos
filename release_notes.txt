@@ -1,3 +1,3 @@
-# Correção de bugs de compatibilidade e exibição
+# Exibição do texto dos hinos
 
-Adição de opção de debug symbols e remoção de widgets de exibição que não funcionavam na versão de release (`Expanded`).
+Ao selecionar um hino, agora é possível ver sua letra completa, bem como controlar o tamanho da fonte.
