@@ -51,6 +51,6 @@ class ControlaPesquisa {
           texto LIKE \'%$chave%\'
       """;
 
-    hinos = await processaHinos.preencher(pesquisa);
+    hinos = await processaHinos.preencher(pesquisa, false);
   }
 }

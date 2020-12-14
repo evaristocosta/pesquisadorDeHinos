@@ -4,6 +4,7 @@ List<Hino> hinoFromJson(String str) =>
     List<Hino>.from(json.decode(str).map((x) => Hino.fromJson(x)));
 
 class Hino {
+  int idhinos;
   int numero;
   String nome;
   String categoria;
@@ -12,6 +13,7 @@ class Hino {
   String indicador;
 
   Hino({
+    this.idhinos,
     this.numero,
     this.nome,
     this.categoria,
@@ -20,6 +22,7 @@ class Hino {
   });
 
   Hino.fromJson(Map<String, dynamic> json) {
+    idhinos = json['idhinos'];
     numero = json['numero'];
     nome = json['nome'];
     categoria = json['categoria'];

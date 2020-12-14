@@ -5,7 +5,7 @@ class ProcessaHinos {
   List<Hino> hinos;
   ConsultaBanco consultaBanco;
 
-  preencher(String pesquisa) async {
+  preencher(String pesquisa, bool temHtml) async {
     consultaBanco = new ConsultaBanco();
 
     try {
@@ -17,8 +17,12 @@ class ProcessaHinos {
         hino.categoria = hino.categoria ?? '';
         hino.coletanea = hino.coletanea ?? '';
         hino.indicador = hino.numero == null ? 's/n' : 'nº ';
-        hino.texto =
-            (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
+        temHtml
+            ? hino.texto = (hino.texto)
+                .replaceAll("\\n\\n", "<br /><br />")
+                .replaceAll("\\n", "<br />")
+            : hino.texto =
+                (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
       });
 
       return hinos;

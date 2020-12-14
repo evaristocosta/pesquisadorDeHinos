@@ -47,6 +47,7 @@ class _ResultadosState extends State<Resultados> {
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ItemHino(
+                          idhinos: itens.hinos[index].idhinos,
                           nome: itens.hinos[index].nome,
                           categoria: itens.hinos[index].categoria,
                           indicador: itens.hinos[index].indicador,

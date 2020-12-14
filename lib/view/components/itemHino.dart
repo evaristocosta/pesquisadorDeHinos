@@ -5,6 +5,7 @@ import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/exibicaoLetra.dart';
 
 class ItemHino extends StatelessWidget {
+  final int idhinos;
   final String nome;
   final String categoria;
   final String indicador;
@@ -14,6 +15,7 @@ class ItemHino extends StatelessWidget {
 
   const ItemHino({
     Key key,
+    @required this.idhinos,
     @required this.nome,
     @required this.categoria,
     @required this.indicador,
@@ -26,8 +28,8 @@ class ItemHino extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ExibicaoLetra()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ExibicaoLetra(idhinos)));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
