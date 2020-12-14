@@ -65,7 +65,7 @@ class _SobreState extends State<Sobre> {
         body: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -105,8 +105,9 @@ class _SobreState extends State<Sobre> {
                         <p>
                           O aplicativo Pesquisador de Hinos ou "Qual é o hino?" vêm como proposta para a
                           solução de um problema recorrente que é a dificuldade de encontrar determinados hinos
-                          cantados nos cultos e eventos da ICM a partir do número atualizado nos hinários, nome ou partes
-                          da letra.<br>
+                          cantados nos cultos e eventos da Igreja Cristã Maranata a partir do número atualizado 
+                          nos hinários, nome ou partes da letra.
+                          <br />
                           Esse aplicativo é distribuido como sendo de código livre e aberto, e licenciado sob 
                           a GNU General Public License v3.0.
                         </p>
