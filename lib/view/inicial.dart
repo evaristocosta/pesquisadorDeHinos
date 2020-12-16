@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:tutorial_coach_mark/animated_focus_light.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/pesquisando.dart';
@@ -28,9 +30,97 @@ class PesquisadorApp extends StatefulWidget {
 class _PesquisadorAppState extends State<PesquisadorApp> {
   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
+  GlobalKey chaveBotao1 = GlobalKey();
+  GlobalKey chaveBotao2 = GlobalKey();
+  TutorialCoachMark tutorialCoachMark;
+  List<TargetFocus> alvos = List();
+
+  void _depoisDeCarregar(_) {
+    Future.delayed(Duration(milliseconds: 100), () {
+      mostraTutorial();
+    });
+  }
+
+  void mostraTutorial() {
+    tutorialCoachMark = TutorialCoachMark(context,
+        targets: alvos, // List<TargetFocus>
+        colorShadow: RequisitaEstilo.azul(30), // DEFAULT Colors.black
+        alignSkip: Alignment.bottomLeft,
+        textSkip: "PULAR",
+        paddingFocus: 10,
+        opacityShadow: 0.7, onFinish: () {
+      print("finish");
+    }, onClickTarget: (target) {
+      print(target);
+    }, onClickSkip: () {
+      print("skip");
+    })
+      ..show();
+  }
+
+  void adicionaAlvos() {
+    alvos.add(TargetFocus(
+        identify: "Alvo 1",
+        keyTarget: chaveBotao1,
+        shape: ShapeLightFocus.Circle,
+        contents: [
+          ContentTarget(
+              align: AlignContent.top,
+              child: Column(
+                children: [
+                  Text(
+                    'Opções e seleção de hinos',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'Raleway',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    "Aqui você tem acesso a diversas seleções e categorias de hinos selecionados e também informações sobre o aplicativo.",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ))
+        ]));
+    alvos.add(TargetFocus(
+        identify: "Alvo 2",
+        keyTarget: chaveBotao2,
+        shape: ShapeLightFocus.RRect,
+        contents: [
+          ContentTarget(
+              align: AlignContent.bottom,
+              child: Column(
+                children: [
+                  Text(
+                    'Pesquise o hino aqui!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'Raleway',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    "Ao encontrar resultados, selecione o hino para ver sua letra.",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ))
+        ]));
+  }
+
   @override
   void initState() {
+    adicionaAlvos();
+    WidgetsBinding.instance.addPostFrameCallback(_depoisDeCarregar);
     super.initState();
+
     _firebaseMessaging.configure(
       // ignore: missing_return
       onMessage: (Map<String, dynamic> message) {
@@ -50,6 +140,25 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
     _firebaseMessaging.getToken().then((token) {
       print(token);
     });
+  }
+
+  SpeedDialChild _padraoBotaoDeMenu(
+      {IconData iconData, Function onPressed, String texto}) {
+    return SpeedDialChild(
+        backgroundColor: Colors.white,
+        child: Icon(
+          iconData,
+          color: RequisitaEstilo.azul(30),
+        ),
+        onTap: onPressed,
+        labelWidget: Text(
+          texto,
+          style: TextStyle(
+            color: RequisitaEstilo.azul(30),
+            fontSize: 18,
+            fontFamily: 'Raleway',
+          ),
+        ));
   }
 
   List<SpeedDialChild> _pegaMenu() {
@@ -73,30 +182,11 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
     return itens;
   }
 
-  SpeedDialChild _padraoBotaoDeMenu(
-      {IconData iconData, Function onPressed, String texto}) {
-    return SpeedDialChild(
-        backgroundColor: Colors.white,
-        child: Icon(
-          iconData,
-          color: RequisitaEstilo.azul(30),
-        ),
-        onTap: onPressed,
-        labelWidget: Text(
-          texto,
-          style: TextStyle(
-            color: RequisitaEstilo.azul(30),
-            fontSize: 18,
-            fontFamily: 'Raleway',
-          ),
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.menu_close,
+        child: Container(key: chaveBotao1, child: Icon(Icons.menu)),
         children: _pegaMenu(),
         overlayColor: Colors.white,
         overlayOpacity: 0.8,
@@ -130,6 +220,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                   height: 40,
                 ),
                 Container(
+                  key: chaveBotao2,
                   width: 320,
                   child: TextField(
                     autofocus: false,

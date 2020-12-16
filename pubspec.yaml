@@ -1,7 +1,7 @@
 name: pesquisadorhinos
 description: Aplicativo "Qual é o hino?", nomeado também como Pesquisador de Hinos.
 
-version: 1.2.0+13
+version: 1.2.1+14
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -23,6 +23,7 @@ dependencies:
   characters: ^1.0.0
   flutter_speed_dial: ^1.2.5
   basic_utils: ^2.6.3
+  tutorial_coach_mark: ^0.5.2
 
 
 dev_dependencies:
