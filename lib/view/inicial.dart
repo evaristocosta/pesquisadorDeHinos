@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
@@ -13,14 +14,22 @@ import 'package:pesquisadorhinos/view/selecoes.dart';
 import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
+  static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
+  /* static FirebaseAnalyticsObserver _firebaseAnalyticsObserver =
+      FirebaseAnalyticsObserver(analytics: _firebaseAnalytics); */
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-        title: 'Página Principal',
-        home: PesquisadorApp(),
-        theme: RequisitaEstilo.tema());
+      title: 'Página Principal',
+      home: PesquisadorApp(),
+      theme: RequisitaEstilo.tema(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)
+      ],
+    );
   }
 }
 
@@ -177,14 +186,20 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         texto: 'Informações',
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Sobre()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Sobre(),
+                  settings: RouteSettings(name: 'Sobre')));
         }));
     itens.add(_padraoBotaoDeMenu(
         iconData: Icons.list,
         texto: 'Seleções e categorias',
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Selecoes()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Selecoes(),
+                  settings: RouteSettings(name: 'Selecoes')));
         }));
 
     return itens;
@@ -237,7 +252,9 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PesquisandoApp()));
+                                builder: (context) => PesquisandoApp(),
+                                settings:
+                                    RouteSettings(name: 'Realizar pesquisa')));
                       });
                     },
                     readOnly: true,

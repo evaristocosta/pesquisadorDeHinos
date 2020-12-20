@@ -61,7 +61,8 @@ class ItemSelecao extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => tipo == 0
                         ? Subselecoes(id, nome)
-                        : Resultados(id, nome)));
+                        : Resultados(id, nome),
+                    settings: RouteSettings(name: "Usou selecao de: $nome")));
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(

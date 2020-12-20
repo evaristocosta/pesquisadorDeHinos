@@ -28,8 +28,11 @@ class ItemHino extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ExibicaoLetra(idhinos)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ExibicaoLetra(idhinos),
+                settings: RouteSettings(name: "Abriu hino: ($numero) $nome")));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
