@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -35,10 +36,16 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> alvos = List();
 
-  void _depoisDeCarregar(_) {
-    Future.delayed(Duration(milliseconds: 100), () {
-      mostraTutorial();
-    });
+  void _depoisDeCarregar(_) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _jaMostrouTutorial = (prefs.getBool('jaMostrouTutorial') ?? false);
+
+    if (!_jaMostrouTutorial)
+      Future.delayed(Duration(milliseconds: 100), () {
+        mostraTutorial();
+      });
+
+    await prefs.setBool('jaMostrouTutorial', true);
   }
 
   void mostraTutorial() {
