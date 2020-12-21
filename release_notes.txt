@@ -1,3 +1,0 @@
-# Exibição do texto dos hinos
-
-Ao selecionar um hino, agora é possível ver sua letra completa, bem como controlar o tamanho da fonte.
