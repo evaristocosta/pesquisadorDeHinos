@@ -15,8 +15,6 @@ import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
   static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
-  /* static FirebaseAnalyticsObserver _firebaseAnalyticsObserver =
-      FirebaseAnalyticsObserver(analytics: _firebaseAnalytics); */
 
   @override
   Widget build(BuildContext context) {
