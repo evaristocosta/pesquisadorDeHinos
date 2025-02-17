@@ -5,8 +5,8 @@ import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaResultadosSelecoes {
-  List<Hino> hinos;
-  ProcessaHinos processaHinos;
+  List<Hino>? hinos;
+  ProcessaHinos? processaHinos;
 
   int get quantidadeHinos {
     return hinos?.length ?? 0;
@@ -14,7 +14,7 @@ class ControlaResultadosSelecoes {
 
   busca(String id, String busca) async {
     processaHinos = new ProcessaHinos();
-    String coluna, pesquisa, escolhidos = "(";
+    String coluna = "", pesquisa, escolhidos = "(";
 
     switch (id) {
       case 'tema':
@@ -83,6 +83,6 @@ class ControlaResultadosSelecoes {
       """;
     }
 
-    hinos = await processaHinos.preencher(pesquisa, false);
+    hinos = await processaHinos!.preencher(pesquisa, false);
   }
 }

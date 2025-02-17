@@ -4,11 +4,11 @@ import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaPesquisa {
-  List<Hino> hinos;
-  ProcessaHinos processaHinos;
+  List<Hino>? hinos;
+  ProcessaHinos? processaHinos;
 
   int get quantidadeHinos {
-    return hinos.length;
+    return hinos!.length;
   }
 
   busca(String chave) async {
@@ -51,6 +51,6 @@ class ControlaPesquisa {
           texto LIKE \'%$chave%\'
       """;
 
-    hinos = await processaHinos.preencher(pesquisa, false);
+    hinos = await processaHinos!.preencher(pesquisa, false);
   }
 }

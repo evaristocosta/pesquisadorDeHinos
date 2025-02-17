@@ -5,8 +5,8 @@ import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
 class ControlaSelecoes {
-  List<SelecoesDisponiveis> selecoes;
-  ConsultaBanco consultaBanco;
+  List<SelecoesDisponiveis>? selecoes;
+  ConsultaBanco? consultaBanco;
 
   int get quantidadeSelecoes {
     return selecoes?.length ?? 0;
@@ -34,16 +34,19 @@ class ControlaSelecoes {
     switch (id) {
       case 'tema':
         var pesquisa = "SELECT DISTINCT categoria FROM hinos";
-        List resposta = json.decode(await consultaBanco.pesquisa(pesquisa));
+        List resposta = json.decode(await consultaBanco!.pesquisa(pesquisa));
 
-        selecoes = resposta.map((categoria) {
-          if (categoria['categoria'] != null)
-            return SelecoesDisponiveis(1, 'tema', categoria['categoria'], '');
-        }).toList();
-        selecoes.removeWhere((elemento) => elemento == null);
+        selecoes = resposta
+            .map((categoria) {
+              if (categoria['categoria'] != null)
+                return SelecoesDisponiveis(
+                    1, 'tema', categoria['categoria'], '');
+            })
+            .cast<SelecoesDisponiveis>()
+            .toList();
+        selecoes!.removeWhere((elemento) => elemento == null);
 
         return selecoes;
-        break;
 
       case 'alfabeto':
         Map alfabeto = json.decode(
@@ -54,21 +57,22 @@ class ControlaSelecoes {
             .toList();
 
         return selecoes;
-        break;
 
       case 'coletanea':
         var pesquisa = "SELECT DISTINCT coletanea FROM hinos";
-        List resposta = json.decode(await consultaBanco.pesquisa(pesquisa));
+        List resposta = json.decode(await consultaBanco!.pesquisa(pesquisa));
 
-        selecoes = resposta.map((coletanea) {
-          if (coletanea['coletanea'] != null)
-            return SelecoesDisponiveis(
-                1, 'coletanea', coletanea['coletanea'], '');
-        }).toList();
-        selecoes.removeWhere((elemento) => elemento == null);
+        selecoes = resposta
+            .map((coletanea) {
+              if (coletanea['coletanea'] != null)
+                return SelecoesDisponiveis(
+                    1, 'coletanea', coletanea['coletanea'], '');
+            })
+            .cast<SelecoesDisponiveis>()
+            .toList();
+        selecoes!.removeWhere((elemento) => elemento == null);
 
         return selecoes;
-        break;
 
       case 'especiais':
         Map especiais = json.decode(
@@ -80,7 +84,6 @@ class ControlaSelecoes {
             .toList();
 
         return selecoes;
-        break;
 
       case 'sugestoes':
         Map sugestoes = json.decode(
@@ -92,7 +95,6 @@ class ControlaSelecoes {
             .toList();
 
         return selecoes;
-        break;
 
       default:
     }
