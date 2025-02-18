@@ -11,11 +11,11 @@ class ItemSelecao extends StatelessWidget {
   final String descricao;
 
   const ItemSelecao({
-    Key key,
-    @required this.tipo,
-    @required this.id,
-    @required this.nome,
-    this.descricao,
+    Key? key,
+    required this.tipo,
+    required this.id,
+    required this.nome,
+    required this.descricao,
   }) : super(key: key);
 
   List<Widget> _temDescricao() {

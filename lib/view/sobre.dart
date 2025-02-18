@@ -32,8 +32,8 @@ class _SobreState extends State<Sobre> {
   _acessarPlayStore() async {
     const url =
         'https://play.google.com/store/apps/details?id=com.trabalhosgerais.pesquisadorhinos';
-    if (await canLaunch(url))
-      await launch(url);
+    if (await canLaunchUrl(url as Uri))
+      await launchUrl(url as Uri);
     else
       throw 'Não foi possível acessar a loja';
   }

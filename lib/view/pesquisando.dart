@@ -16,7 +16,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
   final debouncer = Debouncer(milliseconds: 400);
 
-  ControlaPesquisa pesquisador;
+  late ControlaPesquisa pesquisador;
 
   bool taPesquisando = false;
   bool taCarregando = true;

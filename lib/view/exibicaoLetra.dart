@@ -13,7 +13,7 @@ class ExibicaoLetra extends StatefulWidget {
 }
 
 class _ExibicaoLetraState extends State<ExibicaoLetra> {
-  ControlaExibicaoTexto pesquisador;
+  late ControlaExibicaoTexto pesquisador;
   bool _taCompleto = false;
   double _tamanhoTexto = 14.0;
 
@@ -92,13 +92,14 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  pesquisador.hinos[0].indicador + ' ',
+                                  pesquisador.hinos![0].indicador! + ' ',
                                   style: TextStyle(
                                       fontFamily: 'Raleway',
                                       color: RequisitaEstilo.azul(20)),
                                 ),
                                 Text(
-                                  pesquisador.hinos[0].numero?.toString() ?? '',
+                                  pesquisador.hinos![0].numero?.toString() ??
+                                      '',
                                   style: TextStyle(
                                       fontFamily: 'Raleway',
                                       color: RequisitaEstilo.azul(30),
@@ -146,8 +147,10 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                       ),
                       Html(
                         data: pesquisador.hinos[0].texto,
-                        defaultTextStyle:
-                            TextStyle(fontSize: _tamanhoTexto, height: 1.4),
+                        style: {
+                          "html": Style.fromTextStyle(
+                              TextStyle(fontSize: _tamanhoTexto, height: 1.4))
+                        },
                       ),
                     ],
                   ),

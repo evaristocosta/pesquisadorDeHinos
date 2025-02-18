@@ -14,14 +14,14 @@ class ItemHino extends StatelessWidget {
   final String texto;
 
   const ItemHino({
-    Key key,
-    @required this.idhinos,
-    @required this.nome,
-    @required this.categoria,
-    @required this.indicador,
-    @required this.numero,
-    @required this.coletanea,
-    @required this.texto,
+    Key? key,
+    required this.idhinos,
+    required this.nome,
+    required this.categoria,
+    required this.indicador,
+    required this.numero,
+    required this.coletanea,
+    required this.texto,
   }) : super(key: key);
 
   @override
