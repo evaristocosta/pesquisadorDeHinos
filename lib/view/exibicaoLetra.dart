@@ -92,7 +92,7 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  pesquisador.hinos![0].indicador! + ' ',
+                                  pesquisador.hinos![0].indicador + ' ',
                                   style: TextStyle(
                                       fontFamily: 'Raleway',
                                       color: RequisitaEstilo.azul(20)),
@@ -117,7 +117,7 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: 3, horizontal: 6),
                                   child: Text(
-                                    pesquisador.hinos[0].coletanea,
+                                    pesquisador.hinos![0].coletanea,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 10),
                                   )),
@@ -126,14 +126,14 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                         ),
                       ),
                       Text(
-                        pesquisador.hinos[0].categoria,
+                        pesquisador.hinos![0].categoria,
                         style: TextStyle(
                             color: RequisitaEstilo.cinza(30),
                             fontFamily: 'Raleway',
                             fontSize: 12),
                       ),
                       Text(
-                        pesquisador.hinos[0].nome,
+                        pesquisador.hinos![0].nome,
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Raleway',
@@ -146,7 +146,7 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                         ),
                       ),
                       Html(
-                        data: pesquisador.hinos[0].texto,
+                        data: pesquisador.hinos![0].texto,
                         style: {
                           "html": Style.fromTextStyle(
                               TextStyle(fontSize: _tamanhoTexto, height: 1.4))

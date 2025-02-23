@@ -26,16 +26,12 @@ class ItemSelecao extends StatelessWidget {
       )
     ];
 
-    if (descricao == null) {
-      conteudo.add(Container());
-    } else {
-      conteudo.addAll([
-        SizedBox(
-          height: 13,
-        ),
-        Text(descricao)
-      ]);
-    }
+    conteudo.addAll([
+      SizedBox(
+        height: 13,
+      ),
+      Text(descricao)
+    ]);
     return conteudo;
   }
 

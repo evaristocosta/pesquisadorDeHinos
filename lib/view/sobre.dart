@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Sobre extends StatefulWidget {
@@ -127,28 +127,22 @@ class _SobreState extends State<Sobre> {
                             fontFamily: 'Raleway',
                           ),
                         ),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            // padding: EdgeInsets.all(0),
                             onPressed: _acessarPlayStore,
                             child: Text(
                               'Avalie na Play Store',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            // padding: EdgeInsets.all(0),
                             onPressed: _acessarPagina,
                             child: Text(
                               'Página explicativa',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            // padding: EdgeInsets.all(0),
                             onPressed: _acessarRepositorio,
                             child: Text(
                               'Repositório do código-fonte',

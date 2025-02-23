@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:tutorial_coach_mark/animated_focus_light.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
 import 'package:pesquisadorhinos/view/pesquisando.dart';
@@ -14,7 +9,7 @@ import 'package:pesquisadorhinos/view/selecoes.dart';
 import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
-  static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
+  // static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class Pesquisador extends StatelessWidget {
       home: PesquisadorApp(),
       theme: RequisitaEstilo.tema(),
       navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)
+        // FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)
       ],
     );
   }
@@ -37,14 +32,14 @@ class PesquisadorApp extends StatefulWidget {
 }
 
 class _PesquisadorAppState extends State<PesquisadorApp> {
-  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  // FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   GlobalKey chaveBotao1 = GlobalKey();
   GlobalKey chaveBotao2 = GlobalKey();
-  TutorialCoachMark tutorialCoachMark;
-  List<TargetFocus> alvos = List();
+  // TutorialCoachMark tutorialCoachMark;
+  // List<TargetFocus> alvos = List();
 
-  void _depoisDeCarregar(_) async {
+  /* void _depoisDeCarregar(_) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _jaMostrouTutorial = (prefs.getBool('jaMostrouTutorial') ?? false);
 
@@ -54,9 +49,9 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
       });
 
     await prefs.setBool('jaMostrouTutorial', true);
-  }
+  } */
 
-  void mostraTutorial() {
+  /* void mostraTutorial() {
     tutorialCoachMark = TutorialCoachMark(context,
         targets: alvos, // List<TargetFocus>
         colorShadow: RequisitaEstilo.azul(30), // DEFAULT Colors.black
@@ -71,9 +66,9 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
       print("skip");
     })
       ..show();
-  }
+  } */
 
-  void adicionaAlvos() {
+  /* void adicionaAlvos() {
     alvos.add(TargetFocus(
         identify: "Alvo 1",
         keyTarget: chaveBotao1,
@@ -128,15 +123,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                 ],
               ))
         ]));
-  }
+  } */
 
   @override
   void initState() {
-    adicionaAlvos();
-    WidgetsBinding.instance.addPostFrameCallback(_depoisDeCarregar);
+    // adicionaAlvos();
+    // WidgetsBinding.instance.addPostFrameCallback(_depoisDeCarregar);
     super.initState();
 
-    _firebaseMessaging.configure(
+    /* _firebaseMessaging.configure(
       // ignore: missing_return
       onMessage: (Map<String, dynamic> message) {
         print('on message $message');
@@ -154,18 +149,20 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         const IosNotificationSettings(sound: true, badge: true, alert: true));
     _firebaseMessaging.getToken().then((token) {
       print(token);
-    });
+    }); */
   }
 
   SpeedDialChild _padraoBotaoDeMenu(
-      {IconData iconData, Function onPressed, String texto}) {
+      {required IconData iconData,
+      required Function onPressed,
+      required String texto}) {
     return SpeedDialChild(
         backgroundColor: Colors.white,
         child: Icon(
           iconData,
           color: RequisitaEstilo.azul(30),
         ),
-        onTap: onPressed,
+        //onTap: onPressed,
         labelWidget: Text(
           texto,
           style: TextStyle(

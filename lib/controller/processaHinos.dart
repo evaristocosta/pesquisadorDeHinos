@@ -18,12 +18,11 @@ class ProcessaHinos {
         hino.coletanea = hino.coletanea ?? '';
         hino.indicador = hino.numero == null ? 's/n' : 'nº ';
         temHtml
-            ? hino.texto = (hino.texto)!
+            ? hino.texto = (hino.texto)
                 .replaceAll("\\n\\n", "<br /><br />")
                 .replaceAll("\\n", "<br />")
-            : hino.texto = (hino.texto)!
-                .replaceAll("\\n\\n", "\\n")
-                .replaceAll("\\n", " ");
+            : hino.texto =
+                (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
       });
 
       return hinos;

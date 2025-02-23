@@ -1,8 +1,8 @@
 class SelecoesDisponiveis {
-  int? tipo;
-  String? id;
-  String? nome;
-  String? descricao;
+  int tipo = 0;
+  String id = "";
+  String nome = "";
+  String descricao = "";
 
   SelecoesDisponiveis(int tipo, String id, String nome, String descricao) {
     this.tipo = tipo;
