@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Sobre extends StatefulWidget {
@@ -30,28 +30,33 @@ class _SobreState extends State<Sobre> {
   }
 
   _acessarPlayStore() async {
-    const url =
-        'https://play.google.com/store/apps/details?id=com.trabalhosgerais.pesquisadorhinos';
-    if (await canLaunch(url))
-      await launch(url);
-    else
+    final Uri url = Uri.parse(
+        'https://play.google.com/store/apps/details?id=com.trabalhosgerais.pesquisadorhinos');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
       throw 'Não foi possível acessar a loja';
+    }
   }
 
   _acessarPagina() async {
-    const url = 'https://evaristocosta.github.io/pesquisadorDeHinos/';
-    if (await canLaunch(url))
-      await launch(url);
-    else
+    final Uri url =
+        Uri.parse('https://evaristocosta.github.io/pesquisadorDeHinos/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
       throw 'Não foi possível abrir o site';
+    }
   }
 
   _acessarRepositorio() async {
-    const url = 'https://github.com/evaristocosta/pesquisadorDeHinos';
-    if (await canLaunch(url))
-      await launch(url);
-    else
+    final Uri url =
+        Uri.parse('https://github.com/evaristocosta/pesquisadorDeHinos');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
       throw 'Não foi possível abrir o repositório';
+    }
   }
 
   @override

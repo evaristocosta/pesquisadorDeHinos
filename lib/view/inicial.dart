@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+// FirebaseAnalyticsObserver is still available from firebase_analytics.dart
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
@@ -14,7 +14,8 @@ import 'package:pesquisadorhinos/view/selecoes.dart';
 import 'package:pesquisadorhinos/view/sobre.dart';
 
 class Pesquisador extends StatelessWidget {
-  static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
+  // Updated to use FirebaseAnalytics.instance
+  static FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class Pesquisador extends StatelessWidget {
       home: PesquisadorApp(),
       theme: RequisitaEstilo.tema(),
       navigatorObservers: [
+        // FirebaseAnalyticsObserver constructor remains the same
         FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)
       ],
     );
@@ -37,7 +39,8 @@ class PesquisadorApp extends StatefulWidget {
 }
 
 class _PesquisadorAppState extends State<PesquisadorApp> {
-  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  // FirebaseMessaging instance is now accessed via FirebaseMessaging.instance
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance; // Not needed as a field anymore for new API
 
   GlobalKey chaveBotao1 = GlobalKey();
   GlobalKey chaveBotao2 = GlobalKey();
@@ -136,24 +139,37 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
     WidgetsBinding.instance.addPostFrameCallback(_depoisDeCarregar);
     super.initState();
 
-    _firebaseMessaging.configure(
-      // ignore: missing_return
-      onMessage: (Map<String, dynamic> message) {
-        print('on message $message');
-      },
-      // ignore: missing_return
-      onResume: (Map<String, dynamic> message) {
-        print('on resume $message');
-      },
-      // ignore: missing_return
-      onLaunch: (Map<String, dynamic> message) {
-        print('on launch $message');
-      },
+    // New Firebase Messaging setup
+    // Handle messages received while the app is in the foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    // Handle messages that opened the app from a background or terminated state
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Message opened app: ${message.data}');
+      // You can navigate to a specific screen based on message data here
+    });
+
+    // Request notification permissions
+    FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
     );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.getToken().then((token) {
-      print(token);
+
+    // Get FCM token
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('FCM Token: $token');
     });
   }
 
