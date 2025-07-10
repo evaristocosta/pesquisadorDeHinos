@@ -4,8 +4,8 @@ import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaPesquisa {
-  List<Hino> hinos;
-  ProcessaHinos processaHinos;
+  List<Hino> hinos = [];
+  late ProcessaHinos processaHinos;
 
   int get quantidadeHinos {
     return hinos.length;

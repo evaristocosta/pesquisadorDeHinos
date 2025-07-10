@@ -5,16 +5,18 @@ import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaResultadosSelecoes {
-  List<Hino> hinos;
-  ProcessaHinos processaHinos;
+  List<Hino> hinos = [];
+  late ProcessaHinos processaHinos;
 
   int get quantidadeHinos {
-    return hinos?.length ?? 0;
+    return hinos.length;
   }
 
   busca(String id, String busca) async {
     processaHinos = new ProcessaHinos();
-    String coluna, pesquisa, escolhidos = "(";
+    String coluna = '';
+    String pesquisa = '';
+    String escolhidos = "(";
 
     switch (id) {
       case 'tema':

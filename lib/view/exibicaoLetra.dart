@@ -13,7 +13,7 @@ class ExibicaoLetra extends StatefulWidget {
 }
 
 class _ExibicaoLetraState extends State<ExibicaoLetra> {
-  ControlaExibicaoTexto pesquisador;
+  late ControlaExibicaoTexto pesquisador;
   bool _taCompleto = false;
   double _tamanhoTexto = 14.0;
 
@@ -92,7 +92,7 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  pesquisador.hinos[0].indicador + ' ',
+                                  (pesquisador.hinos[0].indicador ?? '') + ' ',
                                   style: TextStyle(
                                       fontFamily: 'Raleway',
                                       color: RequisitaEstilo.azul(20)),
@@ -116,7 +116,7 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: 3, horizontal: 6),
                                   child: Text(
-                                    pesquisador.hinos[0].coletanea,
+                                    pesquisador.hinos[0].coletanea ?? '',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 10),
                                   )),
@@ -125,14 +125,14 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                         ),
                       ),
                       Text(
-                        pesquisador.hinos[0].categoria,
+                        pesquisador.hinos[0].categoria ?? '',
                         style: TextStyle(
                             color: RequisitaEstilo.cinza(30),
                             fontFamily: 'Raleway',
                             fontSize: 12),
                       ),
                       Text(
-                        pesquisador.hinos[0].nome,
+                        pesquisador.hinos[0].nome ?? '',
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'Raleway',
@@ -145,9 +145,13 @@ class _ExibicaoLetraState extends State<ExibicaoLetra> {
                         ),
                       ),
                       Html(
-                        data: pesquisador.hinos[0].texto,
-                        defaultTextStyle:
-                            TextStyle(fontSize: _tamanhoTexto, height: 1.4),
+                        data: pesquisador.hinos[0].texto ?? '',
+                        style: {
+                          "body": Style(
+                            fontSize: FontSize(_tamanhoTexto),
+                            lineHeight: LineHeight(1.4),
+                          ),
+                        },
                       ),
                     ],
                   ),

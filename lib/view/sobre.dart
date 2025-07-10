@@ -132,28 +132,31 @@ class _SobreState extends State<Sobre> {
                             fontFamily: 'Raleway',
                           ),
                         ),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             onPressed: _acessarPlayStore,
                             child: Text(
                               'Avalie na Play Store',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             onPressed: _acessarPagina,
                             child: Text(
                               'Página explicativa',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
-                        FlatButton(
-                            padding: EdgeInsets.all(0),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             onPressed: _acessarRepositorio,
                             child: Text(
                               'Repositório do código-fonte',

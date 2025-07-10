@@ -15,7 +15,7 @@ class Subselecoes extends StatefulWidget {
 }
 
 class _SubselecoesState extends State<Subselecoes> {
-  ControlaSelecoes itens;
+  late ControlaSelecoes itens;
   bool _taCompleto = false;
 
   @override
@@ -48,9 +48,9 @@ class _SubselecoesState extends State<Subselecoes> {
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ItemSelecao(
-                        id: itens.selecoes[index].id,
-                        tipo: itens.selecoes[index].tipo,
-                        nome: itens.selecoes[index].nome,
+                        id: itens.selecoes[index].id ?? '',
+                        tipo: itens.selecoes[index].tipo ?? 0,
+                        nome: itens.selecoes[index].nome ?? '',
                       );
                     },
                     itemCount: itens.quantidadeSelecoes,

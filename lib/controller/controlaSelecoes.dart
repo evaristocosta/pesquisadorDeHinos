@@ -5,11 +5,11 @@ import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/SelecoesDisponiveis.dart';
 
 class ControlaSelecoes {
-  List<SelecoesDisponiveis> selecoes;
-  ConsultaBanco consultaBanco;
+  List<SelecoesDisponiveis> selecoes = [];
+  late ConsultaBanco consultaBanco;
 
   int get quantidadeSelecoes {
-    return selecoes?.length ?? 0;
+    return selecoes.length;
   }
 
   listaSelecoes() {
@@ -39,8 +39,8 @@ class ControlaSelecoes {
         selecoes = resposta.map((categoria) {
           if (categoria['categoria'] != null)
             return SelecoesDisponiveis(1, 'tema', categoria['categoria'], '');
-        }).toList();
-        selecoes.removeWhere((elemento) => elemento == null);
+          return null;
+        }).whereType<SelecoesDisponiveis>().toList();
 
         return selecoes;
         break;
@@ -64,8 +64,8 @@ class ControlaSelecoes {
           if (coletanea['coletanea'] != null)
             return SelecoesDisponiveis(
                 1, 'coletanea', coletanea['coletanea'], '');
-        }).toList();
-        selecoes.removeWhere((elemento) => elemento == null);
+          return null;
+        }).whereType<SelecoesDisponiveis>().toList();
 
         return selecoes;
         break;

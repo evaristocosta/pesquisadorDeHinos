@@ -2,8 +2,8 @@ import 'package:pesquisadorhinos/model/Hino.dart';
 import 'package:pesquisadorhinos/controller/processaHinos.dart';
 
 class ControlaExibicaoTexto {
-  List<Hino> hinos;
-  ProcessaHinos processaHinos;
+  List<Hino> hinos = [];
+  late ProcessaHinos processaHinos;
 
   busca(int idhinos) async {
     processaHinos = new ProcessaHinos();

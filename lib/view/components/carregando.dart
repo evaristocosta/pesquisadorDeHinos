@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Carregando extends StatelessWidget {
   const Carregando({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

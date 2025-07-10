@@ -2,8 +2,8 @@ import 'package:pesquisadorhinos/database/consultaBanco.dart';
 import 'package:pesquisadorhinos/model/Hino.dart';
 
 class ProcessaHinos {
-  List<Hino> hinos;
-  ConsultaBanco consultaBanco;
+  List<Hino> hinos = [];
+  late ConsultaBanco consultaBanco;
 
   preencher(String pesquisa, bool temHtml) async {
     consultaBanco = new ConsultaBanco();
@@ -18,11 +18,11 @@ class ProcessaHinos {
         hino.coletanea = hino.coletanea ?? '';
         hino.indicador = hino.numero == null ? 's/n' : 'nº ';
         temHtml
-            ? hino.texto = (hino.texto)
+            ? hino.texto = (hino.texto ?? '')
                 .replaceAll("\\n\\n", "<br /><br />")
                 .replaceAll("\\n", "<br />")
             : hino.texto =
-                (hino.texto).replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
+                (hino.texto ?? '').replaceAll("\\n\\n", "\\n").replaceAll("\\n", " ");
       });
 
       return hinos;

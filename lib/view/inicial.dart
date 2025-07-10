@@ -5,7 +5,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 // FirebaseAnalyticsObserver is still available from firebase_analytics.dart
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'package:pesquisadorhinos/controller/requisitaEstilos.dart';
@@ -44,8 +43,8 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
 
   GlobalKey chaveBotao1 = GlobalKey();
   GlobalKey chaveBotao2 = GlobalKey();
-  TutorialCoachMark tutorialCoachMark;
-  List<TargetFocus> alvos = List();
+  TutorialCoachMark? tutorialCoachMark;
+  List<TargetFocus> alvos = <TargetFocus>[];
 
   void _depoisDeCarregar(_) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,7 +59,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   }
 
   void mostraTutorial() {
-    tutorialCoachMark = TutorialCoachMark(context,
+    tutorialCoachMark = TutorialCoachMark(
         targets: alvos, // List<TargetFocus>
         colorShadow: RequisitaEstilo.azul(30), // DEFAULT Colors.black
         alignSkip: Alignment.bottomLeft,
@@ -70,10 +69,11 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
       print("finish");
     }, onClickTarget: (target) {
       print(target);
-    }, onClickSkip: () {
+    }, onSkip: () {
       print("skip");
+      return true;
     })
-      ..show();
+      ..show(context: context);
   }
 
   void adicionaAlvos() {
@@ -82,8 +82,8 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         keyTarget: chaveBotao1,
         shape: ShapeLightFocus.Circle,
         contents: [
-          ContentTarget(
-              align: AlignContent.top,
+          TargetContent(
+              align: ContentAlign.top,
               child: Column(
                 children: [
                   Text(
@@ -109,8 +109,8 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         keyTarget: chaveBotao2,
         shape: ShapeLightFocus.RRect,
         contents: [
-          ContentTarget(
-              align: AlignContent.bottom,
+          TargetContent(
+              align: ContentAlign.bottom,
               child: Column(
                 children: [
                   Text(
@@ -174,7 +174,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   }
 
   SpeedDialChild _padraoBotaoDeMenu(
-      {IconData iconData, Function onPressed, String texto}) {
+      {IconData? iconData, void Function()? onPressed, String? texto}) {
     return SpeedDialChild(
         backgroundColor: Colors.white,
         child: Icon(
@@ -183,7 +183,7 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         ),
         onTap: onPressed,
         labelWidget: Text(
-          texto,
+          texto ?? '',
           style: TextStyle(
             color: RequisitaEstilo.azul(30),
             fontSize: 18,

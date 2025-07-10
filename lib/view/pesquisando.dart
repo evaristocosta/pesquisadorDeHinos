@@ -16,7 +16,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
   bool notNull(Object o) => o != null;
   final debouncer = Debouncer(milliseconds: 400);
 
-  ControlaPesquisa pesquisador;
+  late ControlaPesquisa pesquisador;
 
   bool taPesquisando = false;
   bool taCarregando = true;
@@ -118,13 +118,13 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
       child: ListView.builder(
         itemBuilder: (context, index) {
           return ItemHino(
-            idhinos: pesquisador.hinos[index].idhinos,
-            nome: pesquisador.hinos[index].nome,
-            categoria: pesquisador.hinos[index].categoria,
-            indicador: pesquisador.hinos[index].indicador,
+            idhinos: pesquisador.hinos[index].idhinos ?? 0,
+            nome: pesquisador.hinos[index].nome ?? '',
+            categoria: pesquisador.hinos[index].categoria ?? '',
+            indicador: pesquisador.hinos[index].indicador ?? '',
             numero: pesquisador.hinos[index].numero?.toString() ?? '',
-            coletanea: pesquisador.hinos[index].coletanea,
-            texto: pesquisador.hinos[index].texto,
+            coletanea: pesquisador.hinos[index].coletanea ?? '',
+            texto: pesquisador.hinos[index].texto ?? '',
           );
         },
         itemCount: pesquisador.quantidadeHinos,
@@ -143,10 +143,10 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
                 margin: EdgeInsets.only(bottom: 22),
                 width: 180,
                 child: Image(
-                  image: AssetImage(textos['img']),
+                  image: AssetImage(textos['img'] ?? ''),
                 )),
             Text(
-              textos['titulo'],
+              textos['titulo'] ?? '',
               style: TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 24,
@@ -155,7 +155,7 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
             SizedBox(
               height: 10,
             ),
-            Text(textos['subtitulo'])
+            Text(textos['subtitulo'] ?? '')
           ],
         ),
       ),

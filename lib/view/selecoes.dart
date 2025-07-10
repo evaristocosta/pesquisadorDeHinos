@@ -9,7 +9,7 @@ class Selecoes extends StatefulWidget {
 }
 
 class _SelecoesState extends State<Selecoes> {
-  ControlaSelecoes itens;
+  late ControlaSelecoes itens;
 
   @override
   void initState() {
@@ -35,9 +35,9 @@ class _SelecoesState extends State<Selecoes> {
         child: ListView.builder(
           itemBuilder: (context, index) {
             return ItemSelecao(
-                tipo: itens.selecoes[index].tipo,
-                id: itens.selecoes[index].id,
-                nome: itens.selecoes[index].nome,
+                tipo: itens.selecoes[index].tipo ?? 0,
+                id: itens.selecoes[index].id ?? '',
+                nome: itens.selecoes[index].nome ?? '',
                 descricao: itens.selecoes[index].descricao);
           },
           itemCount: itens.quantidadeSelecoes,

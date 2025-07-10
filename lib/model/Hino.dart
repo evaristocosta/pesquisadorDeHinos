@@ -4,13 +4,13 @@ List<Hino> hinoFromJson(String str) =>
     List<Hino>.from(json.decode(str).map((x) => Hino.fromJson(x)));
 
 class Hino {
-  int idhinos;
-  int numero;
-  String nome;
-  String categoria;
-  String coletanea;
-  String texto;
-  String indicador;
+  int? idhinos;
+  int? numero;
+  String? nome;
+  String? categoria;
+  String? coletanea;
+  String? texto;
+  String? indicador;
 
   Hino({
     this.idhinos,

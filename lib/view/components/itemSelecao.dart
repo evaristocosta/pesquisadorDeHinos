@@ -8,13 +8,13 @@ class ItemSelecao extends StatelessWidget {
   final int tipo;
   final String id;
   final String nome;
-  final String descricao;
+  final String? descricao;
 
   const ItemSelecao({
-    Key key,
-    @required this.tipo,
-    @required this.id,
-    @required this.nome,
+    Key? key,
+    required this.tipo,
+    required this.id,
+    required this.nome,
     this.descricao,
   }) : super(key: key);
 
@@ -33,7 +33,7 @@ class ItemSelecao extends StatelessWidget {
         SizedBox(
           height: 13,
         ),
-        Text(descricao)
+        Text(descricao!)
       ]);
     }
     return conteudo;
