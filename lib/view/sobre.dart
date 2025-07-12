@@ -32,30 +32,79 @@ class _SobreState extends State<Sobre> {
   _acessarPlayStore() async {
     final Uri url = Uri.parse(
         'https://play.google.com/store/apps/details?id=com.trabalhosgerais.pesquisadorhinos');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Não foi possível acessar a loja';
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        throw 'Não foi possível acessar a loja';
+      }
+    } catch (e) {
+      print('Erro ao abrir Play Store: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao abrir a Play Store: $e')),
+      );
     }
   }
 
   _acessarPagina() async {
     final Uri url =
         Uri.parse('https://evaristocosta.github.io/pesquisadorDeHinos/');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Não foi possível abrir o site';
+    try {
+      // Try external application first
+      bool launched =
+          await launchUrl(url, mode: LaunchMode.externalApplication);
+      if (!launched) {
+        // Fallback to platform default
+        launched = await launchUrl(url, mode: LaunchMode.platformDefault);
+      }
+      if (!launched) {
+        // Final fallback to in-app web view
+        await launchUrl(url, mode: LaunchMode.inAppWebView);
+      }
+    } catch (e) {
+      print('Erro ao abrir página: $e');
+      // Try a more direct approach as fallback
+      try {
+        await launchUrl(url);
+      } catch (e2) {
+        print('Erro no fallback: $e2');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Erro ao abrir a página. Verifique se há um navegador instalado.')),
+        );
+      }
     }
   }
 
   _acessarRepositorio() async {
     final Uri url =
         Uri.parse('https://github.com/evaristocosta/pesquisadorDeHinos');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Não foi possível abrir o repositório';
+    try {
+      // Try external application first
+      bool launched =
+          await launchUrl(url, mode: LaunchMode.externalApplication);
+      if (!launched) {
+        // Fallback to platform default
+        launched = await launchUrl(url, mode: LaunchMode.platformDefault);
+      }
+      if (!launched) {
+        // Final fallback to in-app web view
+        await launchUrl(url, mode: LaunchMode.inAppWebView);
+      }
+    } catch (e) {
+      print('Erro ao abrir repositório: $e');
+      // Try a more direct approach as fallback
+      try {
+        await launchUrl(url);
+      } catch (e2) {
+        print('Erro no fallback: $e2');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Erro ao abrir o repositório. Verifique se há um navegador instalado.')),
+        );
+      }
     }
   }
 

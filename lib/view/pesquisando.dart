@@ -65,6 +65,13 @@ class _PesquisandoAppState extends State<PesquisandoApp> {
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: RequisitaEstilo.azul(30), // Blue border
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: TextField(
                   autofocus: true,
                   onChanged: (texto) {

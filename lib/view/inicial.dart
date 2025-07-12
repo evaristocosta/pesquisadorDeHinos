@@ -41,8 +41,8 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
   // FirebaseMessaging instance is now accessed via FirebaseMessaging.instance
   // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance; // Not needed as a field anymore for new API
 
-  GlobalKey chaveBotao1 = GlobalKey();
-  GlobalKey chaveBotao2 = GlobalKey();
+  static final GlobalKey chaveBotao1 = GlobalKey();
+  static final GlobalKey chaveBotao2 = GlobalKey();
   TutorialCoachMark? tutorialCoachMark;
   List<TargetFocus> alvos = <TargetFocus>[];
 
@@ -185,12 +185,15 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
           color: RequisitaEstilo.azul(30),
         ),
         onTap: onPressed,
-        labelWidget: Text(
-          texto ?? '',
-          style: TextStyle(
-            color: RequisitaEstilo.azul(30),
-            fontSize: 18,
-            fontFamily: 'Raleway',
+        labelWidget: Container(
+          padding: EdgeInsets.only(right: 8),
+          child: Text(
+            texto ?? '',
+            style: TextStyle(
+              color: RequisitaEstilo.azul(30),
+              fontSize: 18,
+              fontFamily: 'Raleway',
+            ),
           ),
         ));
   }
