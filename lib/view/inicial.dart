@@ -65,14 +65,17 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
         alignSkip: Alignment.bottomLeft,
         textSkip: "PULAR",
         paddingFocus: 10,
-        opacityShadow: 0.7, onFinish: () {
-      print("finish");
-    }, onClickTarget: (target) {
-      print(target);
-    }, onSkip: () {
-      print("skip");
-      return true;
-    })
+        opacityShadow: 0.7,
+        onFinish: () {
+          print("finish");
+        },
+        onClickTarget: (target) {
+          print(target);
+        },
+        onSkip: () {
+          print("skip");
+          return true;
+        })
       ..show(context: context);
   }
 
@@ -259,6 +262,13 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                 Container(
                   key: chaveBotao2,
                   width: 320,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: RequisitaEstilo.azul(30), // Blue border
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: TextField(
                     autofocus: false,
                     onTap: () {
@@ -274,12 +284,9 @@ class _PesquisadorAppState extends State<PesquisadorApp> {
                     readOnly: true,
                     decoration: InputDecoration(
                         suffixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide(
-                              width: 0.0,
-                            )),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 24)),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                        border: InputBorder.none // Remove default border
+                        ),
                   ),
                 ),
               ]),
