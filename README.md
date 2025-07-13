@@ -9,14 +9,14 @@ por cantores e instrumentistas em igrejas.
 
 Para esta versão, estão previstas as seguintes funcionalidades:
 
-*   Pesquisa pelo número do hino, independente do hinário;
-*   Pesquisa por nome real ou conhecido;
-*   Pesquisa com parte da letra ou palavras-chave;
-*   Seleção de hinos por categoria, alfabeto, coletânea, cultos especiais e sugestões;
-*   Exibição da letra do hino na íntegra.
+- Pesquisa pelo número do hino, independente do hinário;
+- Pesquisa por nome real ou conhecido;
+- Pesquisa com parte da letra ou palavras-chave;
+- Seleção de hinos por categoria, alfabeto, coletânea, cultos especiais e sugestões;
+- Exibição da letra do hino na íntegra.
 
 Caso esteja interessado na documentação do software, favor entrar em contato via email.
 
 ## Banco de Dados
 
-O [banco de dados](assets/pesquisadorHinos.db) da aplicação foi construído com base no disponibilizado no projeto [projection-html5-icm](https://github.com/italozaina/projection-html5-icm/) de @italozaina. 
+O [banco de dados](assets/pesquisadorHinos_v2.db) da aplicação foi construído com base no disponibilizado no projeto [projection-html5-icm](https://github.com/italozaina/projection-html5-icm/) de @italozaina, e nos slides oficiais disponibilizados pelo [Departamento de Louvor da ICM](https://louvoricm.org.br/).

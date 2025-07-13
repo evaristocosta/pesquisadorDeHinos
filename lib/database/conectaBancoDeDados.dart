@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 
 Future<String> conectaBancoDeDados() async {
   var bdCaminho = await getDatabasesPath();
-  var caminho = join(bdCaminho, "pesquisadorHinos.db");
+  var caminho = join(bdCaminho, "pesquisadorHinos_v2.db");
 
   // Make sure the parent directory exists
   try {
@@ -15,7 +15,7 @@ Future<String> conectaBancoDeDados() async {
 
   // Copy from asset
   ByteData data =
-      await rootBundle.load(join("assets/database", "pesquisadorHinos.db"));
+      await rootBundle.load(join("assets/database", "pesquisadorHinos_v2.db"));
   List<int> bytes =
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
